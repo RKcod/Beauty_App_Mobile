@@ -1,6 +1,11 @@
+import 'package:beauty_app_mobile/core/common/custom_safe_area.dart';
+import 'package:beauty_app_mobile/features/auth/views/forgot_password_view.dart';
+import 'package:beauty_app_mobile/features/auth/views/reset_password_view.dart';
+import 'package:beauty_app_mobile/features/auth/views/sign_in_view.dart';
+import 'package:beauty_app_mobile/features/auth/views/sign_up_view.dart';
+import 'package:beauty_app_mobile/features/auth/views/verify_phone_view.dart';
+import 'package:beauty_app_mobile/features/auth/views/your_phone_view.dart';
 import 'package:beauty_app_mobile/theme/theme_app.dart';
-import 'package:device_preview/device_preview.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,11 +52,13 @@ class _MyAppState extends State<MyApp> {
             data: MediaQuery.of(
               context,
             ).copyWith(textScaler: const TextScaler.linear(1)),
-            child: GestureDetector(
-              onTap: () {
-                FocusManager.instance.primaryFocus?.unfocus();
-              },
-              child: child!,
+            child: CustomSafeArea(
+              child: GestureDetector(
+                onTap: () {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                child: child!,
+              ),
             ),
           ),
       theme: theme.copyWith(
@@ -68,7 +75,7 @@ class _MyAppState extends State<MyApp> {
             statusBarIconBrightness: Brightness.light,
           ),
         ),
-        textTheme: theme.textTheme.apply(fontFamily: "ParkinsansRegular"),
+        textTheme: theme.textTheme.apply(fontFamily: "PoppinsRegular"),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           elevation: 0,
           focusElevation: 0,
@@ -82,7 +89,7 @@ class _MyAppState extends State<MyApp> {
       ),
       darkTheme: darkTheme.copyWith(
         colorScheme: darkTheme.colorScheme.copyWith(secondary: Colors.grey),
-        textTheme: theme.textTheme.apply(fontFamily: "ParkinsansRegular"),
+        textTheme: theme.textTheme.apply(fontFamily: "PoppinsRegular"),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: Colors.black,
           foregroundColor: Colors.white,
@@ -91,7 +98,7 @@ class _MyAppState extends State<MyApp> {
         pageTransitionsTheme: ThemeApp.pageTransition,
       ),
       themeMode: ThemeMode.light,
-      home: Scaffold(),
+      home: SignInView(),
     );
   }
 }

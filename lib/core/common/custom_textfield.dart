@@ -21,29 +21,30 @@ class CustomTextfield extends StatelessWidget {
 
   final Color backgroundColor;
   final Color borderColor;
+  final bool hasBorder;
   final double? height;
 
-  CustomTextfield(
-      {super.key,
-      required this.hintText,
-      this.obscure = false,
-      this.controller,
-      this.leading,
-      this.trailing,
-      this.inputFormatters,
-      this.keyboardType,
-      this.focusNode,
-      this.title,
-      this.onChanged,
-      this.maxLines = 1,
-      this.initialText,
-      this.enabled = true,
-      this.errorText,
-      Color? backgroundColor,
-      this.borderColor = Colors.black26,
-      this.height})
-      : backgroundColor =
-            backgroundColor ?? const Color(0xff040912).withValues(alpha: 0.04);
+  CustomTextfield({
+    super.key,
+    required this.hintText,
+    this.obscure = false,
+    this.controller,
+    this.leading,
+    this.trailing,
+    this.inputFormatters,
+    this.keyboardType,
+    this.focusNode,
+    this.title,
+    this.onChanged,
+    this.maxLines = 1,
+    this.initialText,
+    this.enabled = true,
+    this.errorText,
+    Color? backgroundColor,
+    this.borderColor = Colors.black26,
+    this.hasBorder = false,
+    this.height,
+  }) : backgroundColor = backgroundColor ?? const Color(0xffF2F2F2);
 
   @override
   Widget build(BuildContext context) {
@@ -59,24 +60,31 @@ class CustomTextfield extends StatelessWidget {
             child: Text(
               title!,
               style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: "ParkinsansBold"),
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                fontFamily: "ParkinsansBold",
+              ),
             ),
           ),
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           height: height,
           decoration: BoxDecoration(
-              color: backgroundColor,
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                  color: enabled
-                      ? errorText != null
-                          ? colorError
-                          : borderColor
-                      : Colors.black12)),
+            color: backgroundColor,
+            borderRadius: BorderRadius.circular(20),
+            border:
+                !hasBorder
+                    ? null
+                    : Border.all(
+                      color:
+                          enabled
+                              ? errorText != null
+                                  ? colorError
+                                  : borderColor
+                              : Colors.black12,
+                    ),
+          ),
           child: Row(
             children: [
               if (leading != null)
@@ -98,10 +106,12 @@ class CustomTextfield extends StatelessWidget {
                   minLines: maxLines,
                   maxLines: maxLines,
                   enabled: enabled,
-                  style: const TextStyle(
-                      fontFamily: "ParkinsansLight", fontSize: 15),
+                  style: const TextStyle(fontSize: 14),
                   decoration: InputDecoration(
-                      border: InputBorder.none, hintText: hintText),
+                    border: InputBorder.none,
+                    hintText: hintText,
+                    hintStyle: TextStyle(color: Color(0xffABAAB1)),
+                  ),
                 ),
               ),
               if (trailing != null)
@@ -118,13 +128,14 @@ class CustomTextfield extends StatelessWidget {
             child: Text(
               errorText!,
               style: TextStyle(
-                  color: colorError,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                  fontStyle: FontStyle.italic,
-                  fontFamily: "ParkinsansLight"),
+                color: colorError,
+                fontSize: 13,
+                fontWeight: FontWeight.w400,
+                fontStyle: FontStyle.italic,
+                fontFamily: "ParkinsansLight",
+              ),
             ),
-          )
+          ),
       ],
     );
   }
