@@ -98,7 +98,7 @@ class _MyAppState extends State<MyApp> {
         pageTransitionsTheme: ThemeApp.pageTransition,
       ),
       themeMode: ThemeMode.light,
-      home: SignInView(),
+      home: YourPhoneView(),
     );
   }
 }

@@ -55,55 +55,65 @@ class _VerifyPhoneViewState extends State<VerifyPhoneView> {
               ),
             ),
             Gap(32),
-            Pinput(
-              autofocus: false,
-              length: 4,
-              showCursor: false,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              // separatorBuilder: (_) => const SizedBox(
-              //   width: 24,
-              // ),
-              // keyboardType: TextInputType.none,
-              defaultPinTheme: PinTheme(
-                textStyle: TextStyle(
-                  // color: isError ? Colors.red : null,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: "ParkinsansExtraBold",
-                ),
-                decoration: BoxDecoration(
-                  // border: Border.all(color: isError ? Colors.red : Colors.grey),
-                  borderRadius: BorderRadius.circular(24),
-                ),
-              ),
-              focusedPinTheme: PinTheme(
-                textStyle: TextStyle(
-                  // color: isError ? Colors.red : null,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: "ParkinsansExtraBold",
-                ),
-                decoration: BoxDecoration(
-                  // border: Border.all(color: isError ? Colors.red : Colors.grey),
-                  borderRadius: BorderRadius.circular(24),
-                ),
-              ),
-              submittedPinTheme: PinTheme(
-                textStyle: TextStyle(
-                  // color: isError ? Colors.red : null,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: "PoppinsBold",
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    // color: isError ? Colors.red : Palette.primaryColor,
-                    width: 2,
+            Center(
+              child: Pinput(
+                autofocus: false,
+                length: 4,
+                showCursor: false,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                separatorBuilder: (_) => const SizedBox(width: 24),
+                onCompleted: (pin) {},
+                onChanged: (value) {},
+                defaultPinTheme: PinTheme(
+                  width: 60,
+                  height: 60,
+                  textStyle: TextStyle(
+                    // color: isError ? Colors.red : null,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "PoppinsBold",
                   ),
-                  borderRadius: BorderRadius.circular(24),
+                  decoration: BoxDecoration(
+                    color: Color(0xffF2F2F2),
+                    // border: Border.all(color: isError ? Colors.red : Colors.grey),
+                    borderRadius: BorderRadius.circular(24),
+                  ),
                 ),
+                focusedPinTheme: PinTheme(
+                  width: 60,
+                  height: 60,
+                  textStyle: TextStyle(
+                    // color: isError ? Colors.red : null,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "PoppinsBold",
+                  ),
+                  decoration: BoxDecoration(
+                    color: Color(0xffF2F2F2),
+                    // border: Border.all(color: isError ? Colors.red : Colors.grey),
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
+                submittedPinTheme: PinTheme(
+                  width: 60,
+                  height: 60,
+                  textStyle: TextStyle(
+                    // color: isError ? Colors.red : null,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "PoppinsBold",
+                  ),
+                  decoration: BoxDecoration(
+                    color: Color(0xffF2F2F2),
+                    border: Border.all(
+                      // color: isError ? Colors.red : Palette.primaryColor,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
+                pinputAutovalidateMode: PinputAutovalidateMode.disabled,
               ),
-              pinputAutovalidateMode: PinputAutovalidateMode.disabled,
             ),
             Spacer(),
             ResetButtonCountdown(
