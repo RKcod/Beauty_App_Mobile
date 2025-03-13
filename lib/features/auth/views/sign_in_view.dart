@@ -2,6 +2,8 @@ import 'package:beauty_app_mobile/core/common/custom_button.dart';
 import 'package:beauty_app_mobile/core/common/custom_checkbox.dart';
 import 'package:beauty_app_mobile/core/common/custom_textfield.dart';
 import 'package:beauty_app_mobile/core/utils/palette.dart';
+import 'package:beauty_app_mobile/features/auth/views/forgot_password_choose_view.dart';
+import 'package:beauty_app_mobile/features/auth/views/sign_up_view.dart';
 import 'package:beauty_app_mobile/features/auth/widgets/social_network_container.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -96,12 +98,22 @@ class _SignInViewState extends State<SignInView> {
             ),
             Spacer(),
             Center(
-              child: Text(
-                "Forgot your password?",
-                style: TextStyle(
-                  color: Color(0xffABAAB1),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (builder) => const ForgotPasswordChooseView(),
+                    ),
+                  );
+                },
+                child: Text(
+                  "Forgot your password?",
+                  style: TextStyle(
+                    color: Palette.primaryColor,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
             ),
@@ -118,13 +130,23 @@ class _SignInViewState extends State<SignInView> {
                   ),
                 ),
                 Gap(8),
-                Text(
-                  "Sign up",
-                  style: TextStyle(
-                    color: Palette.primaryColor,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: "PoppinsBold",
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (builder) => const SignUpView(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "Sign up",
+                    style: TextStyle(
+                      color: Palette.primaryColor,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "PoppinsBold",
+                    ),
                   ),
                 ),
               ],

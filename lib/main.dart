@@ -1,10 +1,14 @@
 import 'package:beauty_app_mobile/core/common/custom_safe_area.dart';
 import 'package:beauty_app_mobile/features/auth/views/forgot_password_view.dart';
+import 'package:beauty_app_mobile/features/auth/views/onboarding_view.dart';
 import 'package:beauty_app_mobile/features/auth/views/reset_password_view.dart';
 import 'package:beauty_app_mobile/features/auth/views/sign_in_view.dart';
 import 'package:beauty_app_mobile/features/auth/views/sign_up_view.dart';
 import 'package:beauty_app_mobile/features/auth/views/verify_phone_view.dart';
+import 'package:beauty_app_mobile/features/auth/views/welcome_view.dart';
 import 'package:beauty_app_mobile/features/auth/views/your_phone_view.dart';
+import 'package:beauty_app_mobile/features/barber_shop/views/get_location_view.dart';
+import 'package:beauty_app_mobile/features/barber_shop/views/home_view.dart';
 import 'package:beauty_app_mobile/theme/theme_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -98,7 +102,7 @@ class _MyAppState extends State<MyApp> {
         pageTransitionsTheme: ThemeApp.pageTransition,
       ),
       themeMode: ThemeMode.light,
-      home: YourPhoneView(),
+      home: HomeView(),
     );
   }
 }

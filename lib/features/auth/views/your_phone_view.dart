@@ -2,6 +2,7 @@ import 'package:beauty_app_mobile/core/common/custom_button.dart';
 import 'package:beauty_app_mobile/core/packages/intl_phone_number_field/intl_phone_number_field.dart';
 import 'package:beauty_app_mobile/core/packages/intl_phone_number_field/models/country_code_model.dart';
 import 'package:beauty_app_mobile/core/packages/intl_phone_number_field/models/country_config.dart';
+import 'package:beauty_app_mobile/features/auth/views/verify_phone_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
 import 'package:gap/gap.dart';
@@ -96,7 +97,18 @@ class YourPhoneView extends StatelessWidget {
               // },
             ),
             Gap(40),
-            CustomButton(text: "Sign up", isFullWidth: true),
+            CustomButton(
+              text: "Sign up",
+              isFullWidth: true,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (builder) => const VerifyPhoneView(),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),

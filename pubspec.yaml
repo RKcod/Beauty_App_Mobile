@@ -16,6 +16,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_multi_formatter: ^2.13.0
+  flutter_rating: ^2.0.2
   flutter_riverpod: ^2.6.1
   flutter_rounded_date_picker: ^3.0.4
   fluttertoast: ^8.2.12
@@ -24,6 +25,7 @@ dependencies:
   icons_plus: ^5.0.0
   image_picker: ^1.1.2
   mobile_scanner: ^6.0.7
+  permission_handler: ^11.4.0
   pinput: ^5.0.1
   shared_preferences: ^2.5.2
   slide_countdown: ^2.0.2
@@ -39,7 +41,7 @@ flutter:
   uses-material-design: true
   
   assets:
-    - assets/
+    - assets/images/
   
   fonts:
     - family: PoppinsExtraBold

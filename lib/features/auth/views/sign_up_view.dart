@@ -1,6 +1,8 @@
 import 'package:beauty_app_mobile/core/common/custom_button.dart';
 import 'package:beauty_app_mobile/core/common/custom_textfield.dart';
 import 'package:beauty_app_mobile/core/utils/palette.dart';
+import 'package:beauty_app_mobile/features/auth/views/sign_in_view.dart';
+import 'package:beauty_app_mobile/features/auth/views/your_phone_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -55,11 +57,22 @@ class _SignUpViewState extends State<SignUpView> {
               leading: Icon(Iconsax.lock_outline),
             ),
             Gap(20),
-            CustomButton(text: "Sign up", isFullWidth: true),
+            CustomButton(
+              text: "Sign up",
+              isFullWidth: true,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (builder) => const YourPhoneView(),
+                  ),
+                );
+              },
+            ),
             Gap(24),
             Text.rich(
               TextSpan(
-                text: "By contunuing Sign up you agree to the following ",
+                text: "By continuing Sign up you agree to the following ",
                 children: [
                   TextSpan(
                     text: "Terms and Conditions",
@@ -93,13 +106,23 @@ class _SignUpViewState extends State<SignUpView> {
                   ),
                 ),
                 Gap(8),
-                Text(
-                  "Sign in",
-                  style: TextStyle(
-                    color: Palette.primaryColor,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: "PoppinsBold",
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (builder) => const SignInView(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "Sign in",
+                    style: TextStyle(
+                      color: Palette.primaryColor,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "PoppinsBold",
+                    ),
                   ),
                 ),
               ],

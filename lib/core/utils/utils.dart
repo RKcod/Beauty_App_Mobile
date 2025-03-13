@@ -1,6 +1,7 @@
 import 'package:beauty_app_mobile/core/enums/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../common/custom_header_sheet.dart';
 import '../packages/sliding_sheet/sliding_sheet.dart';
@@ -28,70 +29,97 @@ Future<void> ensureVisibleOnTextArea({required GlobalKey textfieldKey}) async {
   }
 }
 
+Future<Position> determinePosition() async {
+  bool serviceEnabled;
+  LocationPermission permission;
+
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    return Future.error('Location services are disabled.');
+  }
+
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      return Future.error('Location permissions are denied');
+    }
+  }
+
+  if (permission == LocationPermission.deniedForever) {
+    return Future.error(
+      'Location permissions are permanently denied, we cannot request permissions.',
+    );
+  }
+
+  return await Geolocator.getCurrentPosition();
+}
+
 void showSnackBar({required BuildContext context, required String content}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       backgroundColor: Colors.red,
-      content: Text(
-        content,
-        style: const TextStyle(color: Colors.white),
-      ),
+      content: Text(content, style: const TextStyle(color: Colors.white)),
     ),
   );
 }
 
-void showToast(BuildContext context,
-    {String content = "Une erreur est survenue", bool isError = true}) {
+void showToast(
+  BuildContext context, {
+  String content = "Une erreur est survenue",
+  bool isError = true,
+}) {
   var fToast = FToast();
   fToast.init(context);
 
   fToast.showToast(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25.0),
-          color: isError ? Colors.redAccent : Colors.greenAccent,
-        ),
-        alignment: Alignment.center,
-        child: Text(
-          content,
-          style: const TextStyle(color: Colors.white),
-        ),
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: isError ? Colors.redAccent : Colors.greenAccent,
       ),
-      positionedToastBuilder: (context, child, gravity) {
-        return Positioned(
-          left: 16,
-          right: 16,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 24,
-          child: child,
-        );
-      },
-      toastDuration: const Duration(seconds: 2));
+      alignment: Alignment.center,
+      child: Text(content, style: const TextStyle(color: Colors.white)),
+    ),
+    positionedToastBuilder: (context, child, gravity) {
+      return Positioned(
+        left: 16,
+        right: 16,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+        child: child,
+      );
+    },
+    toastDuration: const Duration(seconds: 2),
+  );
 }
 
-void showCustomBottomSheet(BuildContext context,
-    {required String title,
-    Widget? body,
-    Widget Function(BuildContext, ScrollController, SheetState)?
-        customBuilder}) {
-  showSlidingBottomSheet(context,
-      builder: (builder) => SlidingSheetDialog(
+void showCustomBottomSheet(
+  BuildContext context, {
+  required String title,
+  Widget? body,
+  Widget Function(BuildContext, ScrollController, SheetState)? customBuilder,
+}) {
+  showSlidingBottomSheet(
+    context,
+    builder:
+        (builder) => SlidingSheetDialog(
           avoidStatusBar: true,
           duration: const Duration(milliseconds: 500),
           snapSpec: const SnapSpec(snappings: [0, 1]),
           cornerRadius: 8,
           cornerRadiusOnFullscreen: 0,
-          headerBuilder: (context, state) => Material(
+          headerBuilder:
+              (context, state) => Material(
                 color: Colors.transparent,
-                child: CustomHeaderSheet(
-                  title: title,
-                ),
+                child: CustomHeaderSheet(title: title),
               ),
-          builder: body == null
-              ? null
-              : (context, state) => Material(
-                    color: Colors.transparent,
-                    child: body,
-                  ),
-          customBuilder: customBuilder));
+          builder:
+              body == null
+                  ? null
+                  : (context, state) =>
+                      Material(color: Colors.transparent, child: body),
+          customBuilder: customBuilder,
+        ),
+  );
 }

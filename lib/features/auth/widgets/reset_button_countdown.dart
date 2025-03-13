@@ -51,7 +51,7 @@ class ResetButtonCountdown extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 28,
+                  width: 50,
                   height: 20,
                   child: SlideCountdownSeparated(
                     padding: EdgeInsets.zero,
@@ -63,7 +63,7 @@ class ResetButtonCountdown extends StatelessWidget {
                     ),
                     onDone: onCountDownFinished,
                     suffixIcon: Text(
-                      "s)",
+                      " sec)",
                       style: TextStyle(
                         color: Palette.primaryColor.withValues(alpha: 0.54),
                         fontFamily: "ParkinsansRegular",

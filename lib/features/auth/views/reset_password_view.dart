@@ -1,5 +1,7 @@
 import 'package:beauty_app_mobile/core/common/custom_button.dart';
 import 'package:beauty_app_mobile/core/common/custom_textfield.dart';
+import 'package:beauty_app_mobile/features/auth/views/auth_action_success_view.dart';
+import 'package:beauty_app_mobile/features/auth/views/sign_in_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -44,7 +46,32 @@ class ResetPasswordView extends StatelessWidget {
               leading: Icon(Iconsax.lock_outline),
             ),
             Gap(20),
-            CustomButton(text: "Change password", isFullWidth: true),
+            CustomButton(
+              text: "Change password",
+              isFullWidth: true,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (builder) => AuthActionSuccessView(
+                          title: "Password Reset",
+                          subtile: "Your password has been reset successfully",
+                          buttonText: "Sign in",
+                          icon: Icons.thumb_up_sharp,
+                          onButtonPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (builder) => SignInView(),
+                              ),
+                            );
+                          },
+                        ),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
