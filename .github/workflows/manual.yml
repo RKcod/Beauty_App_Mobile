@@ -17,8 +17,8 @@ jobs:
         with:
           flutter-version: '3.x'
           cache: true  # Active le cache pour accélérer le build
-        - name: Check secrets value
-          run: echo ${secrets.FLUTTER_TOKEN}
+      - name: Check secrets value
+        run: echo ${secrets.FLUTTER_TOKEN}
       # - name: Install dependencies
       #   run: flutter pub get
 
