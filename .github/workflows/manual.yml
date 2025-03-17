@@ -19,7 +19,7 @@ jobs:
           cache: true  
 
       - name: Build APK
-        run: flutter build apk --release --no-tree-shake-icons 
+        run: flutter build apk --split-per-abi --no-tree-shake-icons
 
       - name: Create release branch and upload APK
         run: |
