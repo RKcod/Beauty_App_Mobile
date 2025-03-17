@@ -59,14 +59,6 @@ class ResetPasswordView extends StatelessWidget {
                           subtile: "Your password has been reset successfully",
                           buttonText: "Sign in",
                           icon: Icons.thumb_up_sharp,
-                          onButtonPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (builder) => SignInView(),
-                              ),
-                            );
-                          },
                         ),
                   ),
                 );

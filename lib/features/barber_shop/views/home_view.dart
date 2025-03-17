@@ -1,5 +1,8 @@
+import 'package:beauty_app_mobile/core/common/custom_button.dart';
 import 'package:beauty_app_mobile/core/common/custom_textfield.dart';
 import 'package:beauty_app_mobile/core/utils/palette.dart';
+import 'package:beauty_app_mobile/features/barber_shop/views/salon_detail_view.dart';
+import 'package:beauty_app_mobile/features/barber_shop/views/search_view.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/salon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -32,10 +35,10 @@ class HomeView extends StatelessWidget {
                   ),
                   const Spacer(),
                   Container(
-                    width: 40,
-                    height: 40,
+                    width: 42,
+                    height: 42,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(16),
                       border: Border.all(color: Color(0xffDFDEE4)),
                     ),
                     child: Center(
@@ -44,10 +47,10 @@ class HomeView extends StatelessWidget {
                   ),
                   Gap(10),
                   Container(
-                    width: 40,
-                    height: 40,
+                    width: 42,
+                    height: 42,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(16),
                       border: Border.all(color: Color(0xffDFDEE4)),
                     ),
                     child: Center(child: Icon(Icons.favorite_border)),
@@ -83,10 +86,19 @@ class HomeView extends StatelessWidget {
                 ],
               ),
               Gap(16),
-              CustomTextfield(
-                hintText: "Search by Salons",
-                leading: Icon(Icons.search, color: Color(0xffABAAB1)),
-                trailing: Icon(BoxIcons.bx_filter),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (builder) => SearchView()),
+                  );
+                },
+                child: CustomTextfield(
+                  hintText: "Search by Salons",
+                  enabled: false,
+                  leading: Icon(Icons.search, color: Color(0xffABAAB1)),
+                  trailing: Icon(BoxIcons.bx_filter),
+                ),
               ),
               Gap(32),
               Row(
@@ -117,20 +129,70 @@ class HomeView extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemBuilder:
                       (context, index) => CircleAvatar(
-                        radius: 32,
+                        radius: 28,
                         backgroundColor: Palette.primaryColor.withValues(
                           alpha: 0.4,
                         ),
                         child: Icon(
                           MingCute.scissors_2_fill,
                           color: Colors.white,
+                          size: 20,
                         ),
                       ),
                   separatorBuilder: (context, index) => Gap(8),
                   itemCount: 10,
                 ),
               ),
-              Gap(16),
+              Gap(32),
+              Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.bottomRight,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Color(0xffF2F2F2),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "-40%",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: "PoppinsBold",
+                          ),
+                        ),
+                        Gap(4),
+                        Text(
+                          "Vourcher for you next\nhaircut service",
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        Gap(24),
+                        CustomButton(text: "Book now"),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 150,
+                    height: 250,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/ad_image.jpg"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Gap(32),
               Row(
                 children: [
                   Text(
@@ -156,7 +218,18 @@ class HomeView extends StatelessWidget {
               ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemBuilder: (context, index) => SalonWidget(),
+                itemBuilder:
+                    (context, index) => GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SalonDetailView(),
+                          ),
+                        );
+                      },
+                      child: SalonWidget(),
+                    ),
                 separatorBuilder: (context, index) => Gap(12),
                 itemCount: 5,
               ),

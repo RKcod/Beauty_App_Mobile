@@ -96,7 +96,7 @@ void showToast(
 
 void showCustomBottomSheet(
   BuildContext context, {
-  required String title,
+  String? title,
   Widget? body,
   Widget Function(BuildContext, ScrollController, SheetState)? customBuilder,
 }) {
@@ -106,19 +106,36 @@ void showCustomBottomSheet(
         (builder) => SlidingSheetDialog(
           avoidStatusBar: true,
           duration: const Duration(milliseconds: 500),
-          snapSpec: const SnapSpec(snappings: [0, 1]),
-          cornerRadius: 8,
+          snapSpec: const SnapSpec(snappings: [0, 0.6, 1]),
+          backdropColor: Colors.black.withValues(alpha: 0.6),
+          cornerRadius: 20,
           cornerRadiusOnFullscreen: 0,
           headerBuilder:
               (context, state) => Material(
-                color: Colors.transparent,
-                child: CustomHeaderSheet(title: title),
+                color: Colors.white,
+                child:
+                    title == null
+                        ? SizedBox(
+                          width: double.infinity,
+                          height: 36,
+                          child: Center(
+                            child: Container(
+                              width: 56,
+                              height: 4,
+                              decoration: BoxDecoration(
+                                color: Color(0xffF2F2F2),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                          ),
+                        )
+                        : CustomHeaderSheet(title: title),
               ),
           builder:
               body == null
                   ? null
                   : (context, state) =>
-                      Material(color: Colors.transparent, child: body),
+                      Material(color: Colors.white, child: body),
           customBuilder: customBuilder,
         ),
   );

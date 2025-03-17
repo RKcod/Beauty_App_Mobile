@@ -1,4 +1,5 @@
 import 'package:beauty_app_mobile/core/common/custom_button.dart';
+import 'package:beauty_app_mobile/features/auth/views/sign_in_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -7,14 +8,12 @@ class AuthActionSuccessView extends StatelessWidget {
   final String title;
   final String subtile;
   final String buttonText;
-  final void Function()? onButtonPressed;
   const AuthActionSuccessView({
     super.key,
     required this.icon,
     required this.title,
     required this.subtile,
     required this.buttonText,
-    this.onButtonPressed,
   });
 
   @override
@@ -44,7 +43,13 @@ class AuthActionSuccessView extends StatelessWidget {
             Gap(48),
             CustomButton(
               text: buttonText,
-              onPressed: onButtonPressed,
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (builder) => SignInView()),
+                  (route) => false,
+                );
+              },
               isFullWidth: true,
             ),
           ],

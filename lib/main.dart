@@ -1,25 +1,23 @@
 import 'package:beauty_app_mobile/core/common/custom_safe_area.dart';
-import 'package:beauty_app_mobile/features/auth/views/forgot_password_view.dart';
 import 'package:beauty_app_mobile/features/auth/views/onboarding_view.dart';
-import 'package:beauty_app_mobile/features/auth/views/reset_password_view.dart';
-import 'package:beauty_app_mobile/features/auth/views/sign_in_view.dart';
-import 'package:beauty_app_mobile/features/auth/views/sign_up_view.dart';
-import 'package:beauty_app_mobile/features/auth/views/verify_phone_view.dart';
 import 'package:beauty_app_mobile/features/auth/views/welcome_view.dart';
-import 'package:beauty_app_mobile/features/auth/views/your_phone_view.dart';
-import 'package:beauty_app_mobile/features/barber_shop/views/get_location_view.dart';
-import 'package:beauty_app_mobile/features/barber_shop/views/home_view.dart';
+import 'package:beauty_app_mobile/features/barber_shop/views/salon_detail_view.dart';
 import 'package:beauty_app_mobile/theme/theme_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/providers/providers.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   final sharedPreferences = await SharedPreferences.getInstance();
+
+  await Future.delayed(const Duration(seconds: 5));
+  FlutterNativeSplash.remove();
 
   runApp(
     ProviderScope(
@@ -102,7 +100,7 @@ class _MyAppState extends State<MyApp> {
         pageTransitionsTheme: ThemeApp.pageTransition,
       ),
       themeMode: ThemeMode.light,
-      home: HomeView(),
+      home: OnboardingView(),
     );
   }
 }

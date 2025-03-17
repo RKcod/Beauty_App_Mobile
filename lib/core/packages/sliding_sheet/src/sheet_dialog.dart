@@ -25,10 +25,7 @@ Future<T?> showSlidingBottomSheet<T>(
   final theme = Theme.of(context);
   final ValueNotifier<int> rebuilder = ValueNotifier(0);
 
-  return Navigator.of(
-    context,
-    rootNavigator: useRootNavigator,
-  ).push(
+  return Navigator.of(context, rootNavigator: useRootNavigator).push(
     _SlidingSheetRoute(
       duration: dialog.duration,
       settings: routeSettings,
@@ -52,42 +49,46 @@ Future<T?> showSlidingBottomSheet<T>(
               );
             }
 
-            Widget sheet = SlidingSheet._(
-              route: route,
-              controller: controller,
-              builder: dialog.builder,
-              customBuilder: dialog.customBuilder,
-              headerBuilder: dialog.headerBuilder,
-              footerBuilder: dialog.footerBuilder,
-              listener: dialog.listener,
-              snapSpec: snapSpec,
-              duration: dialog.duration,
-              color: dialog.color ??
-                  theme.bottomSheetTheme.backgroundColor ??
-                  theme.dialogTheme.backgroundColor ??
-                  theme.dialogBackgroundColor,
-              backdropColor: dialog.backdropColor,
-              shadowColor: dialog.shadowColor,
-              elevation: dialog.elevation,
-              padding: dialog.padding,
-              avoidStatusBar: dialog.avoidStatusBar,
-              margin: dialog.margin,
-              border: dialog.border,
-              cornerRadius: dialog.cornerRadius,
-              cornerRadiusOnFullscreen: dialog.cornerRadiusOnFullscreen,
-              closeOnBackdropTap: dialog.dismissOnBackdropTap,
-              scrollSpec: dialog.scrollSpec,
-              maxWidth: dialog.maxWidth,
-              closeSheetOnBackButtonPressed: false,
-              minHeight: dialog.minHeight,
-              isDismissable: dialog.isDismissable,
-              onDismissPrevented: dialog.onDismissPrevented,
-              isBackdropInteractable: dialog.isBackdropInteractable,
-              axisAlignment: dialog.axisAlignment,
-              extendBody: dialog.extendBody,
-              liftOnScrollHeaderElevation: dialog.liftOnScrollHeaderElevation,
-              liftOnScrollFooterElevation: dialog.liftOnScrollFooterElevation,
-              body: null,
+            Widget sheet = BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+              child: SlidingSheet._(
+                route: route,
+                controller: controller,
+                builder: dialog.builder,
+                customBuilder: dialog.customBuilder,
+                headerBuilder: dialog.headerBuilder,
+                footerBuilder: dialog.footerBuilder,
+                listener: dialog.listener,
+                snapSpec: snapSpec,
+                duration: dialog.duration,
+                color:
+                    dialog.color ??
+                    theme.bottomSheetTheme.backgroundColor ??
+                    theme.dialogTheme.backgroundColor ??
+                    theme.dialogBackgroundColor,
+                backdropColor: dialog.backdropColor,
+                shadowColor: dialog.shadowColor,
+                elevation: dialog.elevation,
+                padding: dialog.padding,
+                avoidStatusBar: dialog.avoidStatusBar,
+                margin: dialog.margin,
+                border: dialog.border,
+                cornerRadius: dialog.cornerRadius,
+                cornerRadiusOnFullscreen: dialog.cornerRadiusOnFullscreen,
+                closeOnBackdropTap: dialog.dismissOnBackdropTap,
+                scrollSpec: dialog.scrollSpec,
+                maxWidth: dialog.maxWidth,
+                closeSheetOnBackButtonPressed: false,
+                minHeight: dialog.minHeight,
+                isDismissable: dialog.isDismissable,
+                onDismissPrevented: dialog.onDismissPrevented,
+                isBackdropInteractable: dialog.isBackdropInteractable,
+                axisAlignment: dialog.axisAlignment,
+                extendBody: dialog.extendBody,
+                liftOnScrollHeaderElevation: dialog.liftOnScrollHeaderElevation,
+                liftOnScrollFooterElevation: dialog.liftOnScrollFooterElevation,
+                body: null,
+              ),
             );
 
             if (parentBuilder != null) {
@@ -238,16 +239,13 @@ class SlidingSheetDialog {
 /// A transparent route for a bottom sheet dialog.
 class _SlidingSheetRoute<T> extends PageRoute<T> {
   final Widget Function(BuildContext, Animation<double>, _SlidingSheetRoute<T>)
-      builder;
+  builder;
   final Duration duration;
   _SlidingSheetRoute({
     required this.builder,
     required this.duration,
     RouteSettings? settings,
-  }) : super(
-          settings: settings,
-          fullscreenDialog: false,
-        );
+  }) : super(settings: settings, fullscreenDialog: false);
 
   @override
   bool get opaque => false;
@@ -272,6 +270,5 @@ class _SlidingSheetRoute<T> extends PageRoute<T> {
     BuildContext context,
     Animation<double> animation,
     Animation<double> secondaryAnimation,
-  ) =>
-      builder(context, animation, this);
+  ) => builder(context, animation, this);
 }

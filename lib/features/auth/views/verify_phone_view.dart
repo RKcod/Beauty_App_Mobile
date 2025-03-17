@@ -1,8 +1,10 @@
 import 'package:beauty_app_mobile/core/utils/palette.dart';
+import 'package:beauty_app_mobile/features/auth/views/auth_action_success_view.dart';
 import 'package:beauty_app_mobile/features/auth/widgets/reset_button_countdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:pinput/pinput.dart';
 
 class VerifyPhoneView extends StatefulWidget {
@@ -62,7 +64,21 @@ class _VerifyPhoneViewState extends State<VerifyPhoneView> {
                 showCursor: false,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 separatorBuilder: (_) => const SizedBox(width: 24),
-                onCompleted: (pin) {},
+                onCompleted: (pin) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (builder) => AuthActionSuccessView(
+                            title: "Code has been sent",
+                            subtile:
+                                "You’ll shortly receive an email with a code to setup a new password.",
+                            buttonText: "Done",
+                            icon: Iconsax.sms_outline,
+                          ),
+                    ),
+                  );
+                },
                 onChanged: (value) {},
                 defaultPinTheme: PinTheme(
                   width: 60,

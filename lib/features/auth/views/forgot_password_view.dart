@@ -1,6 +1,7 @@
 import 'package:beauty_app_mobile/core/common/custom_button.dart';
 import 'package:beauty_app_mobile/core/common/custom_textfield.dart';
 import 'package:beauty_app_mobile/features/auth/views/auth_action_success_view.dart';
+import 'package:beauty_app_mobile/features/auth/views/verify_phone_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -46,16 +47,7 @@ class ForgotPasswordView extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder:
-                        (builder) => AuthActionSuccessView(
-                          title: "Code has been sent",
-                          subtile:
-                              "You’ll shortly receive an email with a code to setup a new password.",
-                          buttonText: "Done",
-                          icon: Iconsax.sms_outline,
-                        ),
-                  ),
+                  MaterialPageRoute(builder: (builder) => VerifyPhoneView()),
                 );
               },
             ),

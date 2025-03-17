@@ -1,6 +1,7 @@
 import 'package:beauty_app_mobile/core/common/custom_button.dart';
 import 'package:beauty_app_mobile/core/utils/palette.dart';
 import 'package:beauty_app_mobile/core/utils/utils.dart';
+import 'package:beauty_app_mobile/features/barber_shop/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -44,8 +45,12 @@ class GetLocationView extends StatelessWidget {
             CustomButton(
               text: "Allow location access",
               isFullWidth: true,
-              onPressed: () {
-                determinePosition();
+              onPressed: () async {
+                await determinePosition();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (builder) => const HomeView()),
+                );
               },
             ),
             Gap(12),
