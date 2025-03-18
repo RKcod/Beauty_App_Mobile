@@ -31,4 +31,4 @@ jobs:
           cp build/app/outputs/flutter-apk/app-arm64-v8a-release.apk apk/app-release.apk
           git add apk/app-release.apk
           git commit -m "Add APK"
-          git push -f https://${{ secrets.FLUTTER_TOKEN }}@github.com/RKcod/Beauty_App_Mobile.git apk-release
+          git push -f https://${{ secrets.FLUTTER_TOKEN }}@github.com/RKcod/Beauty_App_Mobile.git HEAD:apk-release
