@@ -1,4 +1,5 @@
 import 'package:beauty_app_mobile/core/common/custom_button.dart';
+import 'package:beauty_app_mobile/features/barber_shop/views/appointment_success_view.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/salon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -110,7 +111,14 @@ class AppointmentFinishView extends StatelessWidget {
                       ],
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AppointmentSuccessView(),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
