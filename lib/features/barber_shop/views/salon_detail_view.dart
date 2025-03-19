@@ -1,6 +1,7 @@
 import 'package:beauty_app_mobile/core/utils/palette.dart';
 import 'package:beauty_app_mobile/core/utils/utils.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/about_section.dart';
+import 'package:beauty_app_mobile/features/barber_shop/widgets/gallery_section.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/package_section.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/review_section.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/share_section.dart';
@@ -34,11 +35,19 @@ class _SalonDetailViewState extends State<SalonDetailView> {
       backgroundColor: Colors.white,
       body: NotificationListener(
         onNotification: (notification) {
-          isBouncing = scrollController.offset < 50;
-          showTitleAppBar =
+          bool stateBouncing = scrollController.offset < 50;
+          bool stateTitle =
               scrollController.offset >
               (expandedBarHeight - collapsedBarHeight) + 20;
-          setState(() {});
+
+          if (showTitleAppBar != stateTitle) {
+            showTitleAppBar = stateTitle;
+            setState(() {});
+          }
+          if (isBouncing != stateBouncing) {
+            isBouncing = stateBouncing;
+            setState(() {});
+          }
 
           return false;
         },
@@ -289,6 +298,7 @@ class _SalonDetailViewState extends State<SalonDetailView> {
               padding: const EdgeInsets.all(24),
               sliver: switch (selectTabIndex) {
                 2 => PackageSection(),
+                3 => GallerySection(),
                 4 => ReviewSection(),
                 _ => AboutSection(),
               },

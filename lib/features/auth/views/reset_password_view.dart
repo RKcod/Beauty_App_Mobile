@@ -58,7 +58,7 @@ class ResetPasswordView extends StatelessWidget {
                           title: "Password Reset",
                           subtile: "Your password has been reset successfully",
                           buttonText: "Sign in",
-                          icon: Icons.thumb_up_sharp,
+                          icon: Icons.check_circle_outline,
                         ),
                   ),
                 );
