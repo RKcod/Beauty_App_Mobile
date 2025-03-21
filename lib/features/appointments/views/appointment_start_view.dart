@@ -1,7 +1,7 @@
 import 'package:beauty_app_mobile/core/common/custom_button.dart';
 import 'package:beauty_app_mobile/core/utils/palette.dart';
-import 'package:beauty_app_mobile/features/barber_shop/views/appointment_finish_view.dart';
-import 'package:beauty_app_mobile/features/barber_shop/widgets/specialist_appointment_widget.dart';
+import 'package:beauty_app_mobile/features/appointments/views/appointment_finish_view.dart';
+import 'package:beauty_app_mobile/features/appointments/widgets/specialist_appointment_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
