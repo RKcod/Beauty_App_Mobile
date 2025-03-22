@@ -7,6 +7,7 @@ import 'package:beauty_app_mobile/features/appointments/views/appointment_succes
 import 'package:beauty_app_mobile/features/barber_shop/views/salon_detail_view.dart';
 import 'package:beauty_app_mobile/features/settings/views/faq_view.dart';
 import 'package:beauty_app_mobile/features/settings/views/notifications_view.dart';
+import 'package:beauty_app_mobile/features/settings/views/profile_view.dart';
 import 'package:beauty_app_mobile/theme/theme_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -105,7 +106,7 @@ class _MyAppState extends State<MyApp> {
         pageTransitionsTheme: ThemeApp.pageTransition,
       ),
       themeMode: ThemeMode.light,
-      home: FaqView(),
+      home: ProfileView(),
     );
   }
 }
