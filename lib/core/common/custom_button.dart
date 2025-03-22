@@ -14,6 +14,7 @@ class CustomButton extends StatelessWidget {
   final bool transparent;
   final bool loading;
   final BorderSide? border;
+  final double radius;
   const CustomButton({
     super.key,
     this.onPressed,
@@ -26,6 +27,7 @@ class CustomButton extends StatelessWidget {
     this.loading = false,
     this.colorText = Colors.white,
     this.border,
+    this.radius = 24,
   });
 
   @override
@@ -43,7 +45,7 @@ class CustomButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           shape: RoundedRectangleBorder(
             side: border ?? BorderSide.none,
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(radius),
           ),
         ),
         child:
