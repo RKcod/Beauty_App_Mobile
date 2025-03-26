@@ -1,4 +1,5 @@
 import 'package:beauty_app_mobile/core/common/custom_button.dart';
+import 'package:beauty_app_mobile/core/common/custom_dialog.dart';
 import 'package:beauty_app_mobile/core/enums/enums.dart';
 import 'package:beauty_app_mobile/core/utils/palette.dart';
 import 'package:flutter/cupertino.dart';
@@ -106,6 +107,27 @@ class _AppointmentWidgetState extends State<AppointmentWidget> {
                           colorText: Colors.red,
                           border: BorderSide(color: Colors.red),
                           radius: 8,
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder:
+                                  (context) => CustomDialog(
+                                    title: "Cancellation of appointment",
+                                    subtitle: Text(
+                                      "Are you sure you want to cancel this appointment?",
+                                    ),
+                                    firstButtonText: "NON",
+                                    firstButtonOnPressed: (context) {
+                                      Navigator.pop(context);
+                                    },
+                                    secondButtonText: "OUI",
+                                    secondButtonOnPressed: (context) {
+                                      Navigator.pop(context);
+                                    },
+                                    secondButtonColor: Colors.red,
+                                  ),
+                            );
+                          },
                         ),
                       ],
                     )

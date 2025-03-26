@@ -9,15 +9,18 @@ class CustomDialog extends StatelessWidget {
   final void Function(BuildContext) firstButtonOnPressed;
   final String secondButtonText;
   final void Function(BuildContext) secondButtonOnPressed;
+  final Color secondButtonColor;
 
-  const CustomDialog(
-      {super.key,
-      required this.title,
-      required this.subtitle,
-      required this.firstButtonText,
-      required this.firstButtonOnPressed,
-      required this.secondButtonText,
-      required this.secondButtonOnPressed});
+  const CustomDialog({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.firstButtonText,
+    required this.firstButtonOnPressed,
+    required this.secondButtonText,
+    required this.secondButtonOnPressed,
+    this.secondButtonColor = Palette.primaryColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +41,9 @@ class CustomDialog extends StatelessWidget {
               Text(
                 title,
                 style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: "ParkinsansRegular"),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
               const Gap(16),
               subtitle,
@@ -49,42 +52,46 @@ class CustomDialog extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                      onPressed: () {
-                        firstButtonOnPressed(context);
-                      },
-                      style: TextButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                                color:
-                                    Color(0xff49454F).withValues(alpha: 0.4)),
-                            borderRadius: BorderRadius.circular(100)),
+                    onPressed: () {
+                      firstButtonOnPressed(context);
+                    },
+                    style: TextButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Color(0xff49454F).withValues(alpha: 0.4),
+                        ),
+                        borderRadius: BorderRadius.circular(100),
                       ),
-                      child: Text(
-                        firstButtonText,
-                        style: TextStyle(
-                            fontFamily: "ParkinsansRegular",
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xff49454F).withValues(alpha: 0.4)),
-                      )),
+                    ),
+                    child: Text(
+                      firstButtonText,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xff49454F).withValues(alpha: 0.4),
+                      ),
+                    ),
+                  ),
                   Gap(12),
                   TextButton(
-                      onPressed: () {
-                        secondButtonOnPressed(context);
-                      },
-                      style: TextButton.styleFrom(
-                        backgroundColor: Palette.primaryColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(100)),
+                    onPressed: () {
+                      secondButtonOnPressed(context);
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: secondButtonColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100),
                       ),
-                      child: Text(
-                        secondButtonText,
-                        style: TextStyle(
-                            fontFamily: "ParkinsansRegular",
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white),
-                      ))
+                    ),
+                    child: Text(
+                      secondButtonText,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ],
-              )
+              ),
             ],
           ),
         ),

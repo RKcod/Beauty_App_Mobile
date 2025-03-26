@@ -1,4 +1,6 @@
 import 'package:beauty_app_mobile/core/utils/palette.dart';
+import 'package:beauty_app_mobile/features/settings/views/faq_view.dart';
+import 'package:beauty_app_mobile/features/settings/views/notifications_view.dart';
 import 'package:beauty_app_mobile/models/setting_item.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -13,7 +15,16 @@ class ProfileView extends StatelessWidget {
       SettingItem(icon: Icons.history, text: "Payment History"),
       SettingItem(icon: Icons.lock_outline, text: "Change Password"),
       SettingItem(icon: Icons.people_alt_outlined, text: "Invites Friends"),
-      SettingItem(icon: Icons.forum_outlined, text: "FAQs"),
+      SettingItem(
+        icon: Icons.forum_outlined,
+        text: "FAQs",
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => FaqView()),
+          );
+        },
+      ),
       SettingItem(icon: Icons.help_outline, text: "About Us"),
       SettingItem(icon: Icons.logout, text: "Logout"),
     ];
@@ -40,26 +51,36 @@ class ProfileView extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Color(0xffDFDEE4)),
-                    ),
-                    child: Center(
-                      child: Stack(
-                        children: [
-                          Icon(Icons.notifications_none_outlined),
-                          Positioned(
-                            top: 2,
-                            right: 2,
-                            child: CircleAvatar(
-                              radius: 2,
-                              backgroundColor: Palette.primaryColor,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NotificationsView(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: 42,
+                      height: 42,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: Color(0xffDFDEE4)),
+                      ),
+                      child: Center(
+                        child: Stack(
+                          children: [
+                            Icon(Icons.notifications_none_outlined),
+                            Positioned(
+                              top: 2,
+                              right: 2,
+                              child: CircleAvatar(
+                                radius: 2,
+                                backgroundColor: Palette.primaryColor,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

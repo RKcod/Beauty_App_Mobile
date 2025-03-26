@@ -6,9 +6,13 @@ class GallerySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverGrid(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) => Container(
+    return SliverGrid.count(
+      crossAxisCount: 3,
+      mainAxisSpacing: 8,
+      crossAxisSpacing: 8,
+      children: List.generate(
+        44,
+        (index) => Container(
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/images/package_image.jpg"),
@@ -16,22 +20,6 @@ class GallerySection extends StatelessWidget {
             ),
           ),
         ),
-        childCount: 44,
-      ),
-      gridDelegate: SliverQuiltedGridDelegate(
-        crossAxisCount: 3,
-        mainAxisSpacing: 2,
-        crossAxisSpacing: 2,
-        repeatPattern: QuiltedGridRepeatPattern.inverted,
-        pattern: const [
-          QuiltedGridTile(1, 1),
-          QuiltedGridTile(2, 2),
-          QuiltedGridTile(1, 2),
-          QuiltedGridTile(2, 1),
-          // QuiltedGridTile(1, 2),
-          // QuiltedGridTile(1, 1),
-          // QuiltedGridTile(1, 1),
-        ],
       ),
     );
   }

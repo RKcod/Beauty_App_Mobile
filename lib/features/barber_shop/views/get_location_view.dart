@@ -1,6 +1,8 @@
 import 'package:beauty_app_mobile/core/common/custom_button.dart';
 import 'package:beauty_app_mobile/core/utils/palette.dart';
 import 'package:beauty_app_mobile/core/utils/utils.dart';
+import 'package:beauty_app_mobile/features/barber_shop/views/address_location_view.dart';
+import 'package:beauty_app_mobile/features/barber_shop/views/bottom_navigation_view.dart';
 import 'package:beauty_app_mobile/features/barber_shop/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -47,9 +49,13 @@ class GetLocationView extends StatelessWidget {
               isFullWidth: true,
               onPressed: () async {
                 await determinePosition();
+
+                if (!context.mounted) return;
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (builder) => const HomeView()),
+                  MaterialPageRoute(
+                    builder: (builder) => const BottomNavigationView(),
+                  ),
                 );
               },
             ),
@@ -59,6 +65,14 @@ class GetLocationView extends StatelessWidget {
               text: "Enter location manually",
               transparent: true,
               colorText: Palette.primaryColor,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (builder) => const AddressLocationView(),
+                  ),
+                );
+              },
             ),
           ],
         ),

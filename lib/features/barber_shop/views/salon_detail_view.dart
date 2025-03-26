@@ -65,7 +65,14 @@ class _SalonDetailViewState extends State<SalonDetailView> {
                   surfaceTintColor: Colors.transparent,
                   elevation: 0,
                   automaticallyImplyLeading: false,
-                  leading: Icon(Icons.west, color: Colors.white),
+                  leading: IconButton(
+                    padding: const EdgeInsets.all(8),
+                    icon: Icon(Icons.west),
+                    color: Colors.white,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
                   actions: [
                     Padding(
                       padding: const EdgeInsets.only(right: 24),

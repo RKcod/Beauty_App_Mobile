@@ -1,5 +1,13 @@
 import 'package:beauty_app_mobile/core/common/custom_safe_area.dart';
 import 'package:beauty_app_mobile/features/appointments/views/appointment_list_view.dart';
+import 'package:beauty_app_mobile/features/auth/views/onboarding_view.dart';
+import 'package:beauty_app_mobile/features/barber_shop/views/bottom_navigation_view.dart';
+import 'package:beauty_app_mobile/features/barber_shop/views/get_location_view.dart';
+import 'package:beauty_app_mobile/features/barber_shop/views/home_view.dart';
+import 'package:beauty_app_mobile/features/chat/views/list_conversations_view.dart';
+import 'package:beauty_app_mobile/features/settings/views/faq_view.dart';
+import 'package:beauty_app_mobile/features/settings/views/notifications_view.dart';
+import 'package:beauty_app_mobile/features/settings/views/profile_view.dart';
 import 'package:beauty_app_mobile/theme/theme_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -70,7 +78,7 @@ class _MyAppState extends State<MyApp> {
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,
           systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent,
+            statusBarColor: Colors.white,
             // statusBarColor: Palette.primaryColor,
             statusBarIconBrightness: Brightness.light,
           ),
@@ -98,7 +106,7 @@ class _MyAppState extends State<MyApp> {
         pageTransitionsTheme: ThemeApp.pageTransition,
       ),
       themeMode: ThemeMode.light,
-      home: AppointmentListView(),
+      home: OnboardingView(),
     );
   }
 }
