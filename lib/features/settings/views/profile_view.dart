@@ -1,4 +1,5 @@
 import 'package:beauty_app_mobile/core/utils/palette.dart';
+import 'package:beauty_app_mobile/features/settings/views/edit_profile_view.dart';
 import 'package:beauty_app_mobile/features/settings/views/faq_view.dart';
 import 'package:beauty_app_mobile/features/settings/views/notifications_view.dart';
 import 'package:beauty_app_mobile/models/setting_item.dart';
@@ -104,7 +105,16 @@ class ProfileView extends StatelessWidget {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   Gap(6),
-                  Icon(Icons.edit, size: 16, color: Color(0xff432BDF)),
+                  GestureDetector(
+                    onTap:
+                        () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EditProfileView(),
+                          ),
+                        ),
+                    child: Icon(Icons.edit, size: 16, color: Color(0xff432BDF)),
+                  ),
                 ],
               ),
               Gap(2),

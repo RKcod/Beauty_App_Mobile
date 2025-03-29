@@ -1,31 +1,19 @@
 import 'package:flutter/material.dart';
 
 class CustomDropdown extends StatelessWidget {
-  final Color background;
   final String? title;
-  final Widget? leading;
-  final Widget? trailing;
   final List<String> options;
-
-  final String? hint;
-  final double hintSize;
-  final Widget? hintWidget;
-  final void Function()? onTap;
+  final String hint;
+  final void Function(String?)? onChanged;
   final String? value;
-
-  CustomDropdown(
-      {super.key,
-      required this.options,
-      Color? background,
-      this.title,
-      this.leading,
-      this.trailing,
-      this.hint,
-      this.hintWidget,
-      this.hintSize = 15,
-      this.onTap,
-      this.value})
-      : background = background ?? Colors.white.withValues(alpha: 0.5);
+  const CustomDropdown({
+    super.key,
+    required this.options,
+    this.title,
+    required this.hint,
+    this.onChanged,
+    this.value,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,47 +27,49 @@ class CustomDropdown extends StatelessWidget {
             child: Text(
               title!,
               style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: "ParkinsansBold"),
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                fontFamily: "PoppinsBold",
+              ),
             ),
           ),
-        Container(
+        SizedBox(
           width: double.infinity,
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-              color: background,
-              borderRadius: BorderRadius.circular(16),
-              border:
-                  Border.all(color: Colors.black12)),
-          child: Row(
-            children: [
-              if (leading != null)
-                Padding(
-                  padding: const EdgeInsets.only(right: 12),
-                  child: leading,
+          child: DropdownButtonHideUnderline(
+            child: ButtonTheme(
+              alignedDropdown: true,
+              child: DropdownButtonFormField<String>(
+                items:
+                    options
+                        .map(
+                          (e) => DropdownMenuItem<String>(
+                            value: e,
+                            child: Text(
+                              e,
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: const Color(0xffF2F2F2),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 0,
+                    vertical: 18,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
-              Expanded(
-                child: hintWidget ??
-                    GestureDetector(
-                      onTap: onTap,
-                      child: Text(
-                        value ?? (hint ?? ""),
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontFamily: "ParkinsansLight",
-                            fontSize: hintSize,
-                            color: Colors.black
-                                .withValues(alpha: value != null ? 1 : 0.54)),
-                      ),
-                    ),
+                value: value,
+                isExpanded: true,
+                hint: Text(hint),
+                onChanged: onChanged,
+                icon: const Icon(Icons.keyboard_arrow_down),
               ),
-              if (trailing != null)
-                Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: trailing,
-                ),
-            ],
+            ),
           ),
         ),
       ],

@@ -10,7 +10,7 @@ class CustomSafeArea extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-        // statusBarColor: Theme.of(context).scaffoldBackgroundColor,
+        statusBarColor: Theme.of(context).scaffoldBackgroundColor,
         statusBarIconBrightness:
             Theme.of(context).brightness == Brightness.light
                 ? Brightness.dark

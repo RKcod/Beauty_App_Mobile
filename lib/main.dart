@@ -5,6 +5,7 @@ import 'package:beauty_app_mobile/features/barber_shop/views/bottom_navigation_v
 import 'package:beauty_app_mobile/features/barber_shop/views/get_location_view.dart';
 import 'package:beauty_app_mobile/features/barber_shop/views/home_view.dart';
 import 'package:beauty_app_mobile/features/chat/views/list_conversations_view.dart';
+import 'package:beauty_app_mobile/features/settings/views/edit_profile_view.dart';
 import 'package:beauty_app_mobile/features/settings/views/faq_view.dart';
 import 'package:beauty_app_mobile/features/settings/views/notifications_view.dart';
 import 'package:beauty_app_mobile/features/settings/views/profile_view.dart';
