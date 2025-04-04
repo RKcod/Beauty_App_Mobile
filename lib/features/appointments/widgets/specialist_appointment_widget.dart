@@ -1,10 +1,16 @@
 import 'package:beauty_app_mobile/core/utils/palette.dart';
+import 'package:beauty_app_mobile/models/specialist_model.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class SpecialistAppointmentWidget extends StatelessWidget {
+  final SpecialistModel specialist;
   final bool isSelected;
-  const SpecialistAppointmentWidget({super.key, required this.isSelected});
+  const SpecialistAppointmentWidget({
+    super.key,
+    required this.isSelected,
+    required this.specialist,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +34,14 @@ class SpecialistAppointmentWidget extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
               image: DecorationImage(
-                image: AssetImage("assets/images/profile_picture.png"),
+                image: AssetImage(specialist.imageUrl),
                 fit: BoxFit.cover,
               ),
             ),
           ),
           Spacer(),
           Text(
-            "Connor",
+            specialist.name,
             style: TextStyle(
               color: isSelected ? Palette.primaryColor : Colors.black,
               fontSize: 13,
@@ -44,7 +50,7 @@ class SpecialistAppointmentWidget extends StatelessWidget {
           ),
           Gap(2),
           Text(
-            "Sx Barber",
+            specialist.role,
             style: TextStyle(fontSize: 11, color: Color(0xffABAAB1)),
           ),
         ],

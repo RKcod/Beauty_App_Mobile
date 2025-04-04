@@ -1,5 +1,6 @@
 import 'package:beauty_app_mobile/core/common/custom_button.dart';
 import 'package:beauty_app_mobile/core/utils/palette.dart';
+import 'package:beauty_app_mobile/features/barber_shop/views/bottom_navigation_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -49,7 +50,19 @@ class AppointmentSuccessView extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  CustomButton(isFullWidth: true, text: "Continue Booking"),
+                  CustomButton(
+                    isFullWidth: true,
+                    text: "Continue Booking",
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BottomNavigationView(),
+                        ),
+                        (route) => false,
+                      );
+                    },
+                  ),
                   Gap(8),
                   CustomButton(
                     isFullWidth: true,

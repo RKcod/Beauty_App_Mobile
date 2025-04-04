@@ -4,15 +4,68 @@ import 'package:beauty_app_mobile/core/utils/palette.dart';
 import 'package:beauty_app_mobile/features/barber_shop/views/salon_detail_view.dart';
 import 'package:beauty_app_mobile/features/barber_shop/views/search_view.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/salon_widget.dart';
+import 'package:beauty_app_mobile/models/salon_model.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:icons_plus/icons_plus.dart';
+
+var salons = [
+  SalonModel(
+    name: "Green Apple",
+    address: "6391 Elgin St. Celina, Delaware ...",
+    imageUrl: "assets/images/image_barber1.jpg",
+    rating: 5,
+    distance: 15,
+  ),
+  SalonModel(
+    name: "Jawed Habib",
+    address: "8502 Preston Rd. Inglewood, M...",
+    imageUrl: "assets/images/image_barber2.jpg",
+    rating: 4,
+    distance: 22,
+  ),
+  SalonModel(
+    name: "The Galleria",
+    address: "4140 Parker Rd. Allentown, New ...",
+    imageUrl: "assets/images/image_barber3.jpg",
+    rating: 4,
+    distance: 48,
+  ),
+  SalonModel(
+    name: "Michael Saldana",
+    address: "3891 Ranchview Dr. Richardson,...",
+    imageUrl: "assets/images/image_barber4.jpg",
+    rating: 3,
+    distance: 48,
+  ),
+  SalonModel(
+    name: "Fox and Jane",
+    address: "3517 W. Gray St. Utica, Pennsylv...",
+    imageUrl: "assets/images/image_barber5.jpg",
+    rating: 5,
+    distance: 106,
+  ),
+  SalonModel(
+    name: "The Galleria",
+    address: "4140 Parker Rd. Allentown, New ...",
+    imageUrl: "assets/images/image_barber6.jpg",
+    rating: 4,
+    distance: 48,
+  ),
+];
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var iconsService = [
+      MingCute.scissors_2_fill,
+      Icons.spa,
+      Icons.style_rounded,
+      Icons.hotel_class_outlined,
+    ];
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -134,7 +187,7 @@ class HomeView extends StatelessWidget {
                           alpha: 0.4,
                         ),
                         child: Icon(
-                          MingCute.scissors_2_fill,
+                          iconsService[index % 4],
                           color: Colors.white,
                           size: 20,
                         ),
@@ -228,10 +281,10 @@ class HomeView extends StatelessWidget {
                           ),
                         );
                       },
-                      child: SalonWidget(),
+                      child: SalonWidget(salon: salons[index]),
                     ),
                 separatorBuilder: (context, index) => Gap(12),
-                itemCount: 5,
+                itemCount: salons.length,
               ),
             ],
           ),

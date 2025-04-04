@@ -1,8 +1,10 @@
+import 'package:beauty_app_mobile/models/specialist_model.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class SpecialistWidget extends StatelessWidget {
-  const SpecialistWidget({super.key});
+  final SpecialistModel specialist;
+  const SpecialistWidget({super.key, required this.specialist});
 
   @override
   Widget build(BuildContext context) {
@@ -11,13 +13,13 @@ class SpecialistWidget extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 32,
-          backgroundImage: AssetImage("assets/images/profile_picture.png"),
+          backgroundImage: AssetImage(specialist.imageUrl),
         ),
         Gap(8),
-        Text("Lily", style: TextStyle(fontSize: 13)),
+        Text(specialist.name, style: TextStyle(fontSize: 13)),
         Gap(2),
         Text(
-          "Hair Stylist",
+          specialist.role,
           style: TextStyle(fontSize: 11, color: Color(0xffC6C5CD)),
         ),
       ],

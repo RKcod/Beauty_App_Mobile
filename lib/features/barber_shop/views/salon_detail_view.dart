@@ -6,11 +6,35 @@ import 'package:beauty_app_mobile/features/barber_shop/widgets/package_section.d
 import 'package:beauty_app_mobile/features/barber_shop/widgets/review_section.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/share_section.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/specialist_widget.dart';
+import 'package:beauty_app_mobile/models/specialist_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:gap/gap.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:sliver_tools/sliver_tools.dart';
+
+var specialists = [
+  SpecialistModel(
+    name: "Lily",
+    role: "Hair Stylist",
+    imageUrl: "assets/images/specialist_image1.jpg",
+  ),
+  SpecialistModel(
+    name: "Lee",
+    role: "Sx Barber",
+    imageUrl: "assets/images/specialist_image2.jpg",
+  ),
+  SpecialistModel(
+    name: "Connor",
+    role: "Makeup Artist",
+    imageUrl: "assets/images/specialist_image3.jpg",
+  ),
+  SpecialistModel(
+    name: "Jason",
+    role: "Hair Stylist",
+    imageUrl: "assets/images/specialist_image4.jpg",
+  ),
+];
 
 class SalonDetailView extends StatefulWidget {
   const SalonDetailView({super.key});
@@ -224,7 +248,11 @@ class _SalonDetailViewState extends State<SalonDetailView> {
                           onTap: () {
                             showCustomBottomSheet(
                               context,
-                              body: ShareSection(),
+                              body:
+                                  (context, state) => Material(
+                                    color: Colors.white,
+                                    child: ShareSection(),
+                                  ),
                             );
                           },
                           child: Column(
@@ -248,7 +276,10 @@ class _SalonDetailViewState extends State<SalonDetailView> {
                       height: 115,
                       child: ListView.separated(
                         scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) => SpecialistWidget(),
+                        itemBuilder:
+                            (context, index) => SpecialistWidget(
+                              specialist: specialists[index % 4],
+                            ),
                         separatorBuilder: (context, _) => Gap(20),
                         itemCount: 8,
                       ),

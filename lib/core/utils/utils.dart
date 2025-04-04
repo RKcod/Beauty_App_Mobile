@@ -34,11 +34,13 @@ Future<Position> determinePosition() async {
   LocationPermission permission;
 
   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  print("Les services sont activés : $serviceEnabled");
   if (!serviceEnabled) {
     return Future.error('Location services are disabled.');
   }
 
   permission = await Geolocator.checkPermission();
+  print("Permission : $permission");
   if (permission == LocationPermission.denied) {
     permission = await Geolocator.requestPermission();
     if (permission == LocationPermission.denied) {
@@ -52,6 +54,8 @@ Future<Position> determinePosition() async {
     );
   }
 
+  print("Je suis ici");
+  // Geolocator.getLastKnownPosition();
   return await Geolocator.getCurrentPosition();
 }
 
@@ -97,7 +101,7 @@ void showToast(
 void showCustomBottomSheet(
   BuildContext context, {
   String? title,
-  Widget? body,
+  Widget Function(BuildContext, SheetState)? body,
   Widget Function(BuildContext, ScrollController, SheetState)? customBuilder,
 }) {
   showSlidingBottomSheet(
@@ -131,11 +135,7 @@ void showCustomBottomSheet(
                         )
                         : CustomHeaderSheet(title: title),
               ),
-          builder:
-              body == null
-                  ? null
-                  : (context, state) =>
-                      Material(color: Colors.white, child: body),
+          builder: body,
           customBuilder: customBuilder,
         ),
   );

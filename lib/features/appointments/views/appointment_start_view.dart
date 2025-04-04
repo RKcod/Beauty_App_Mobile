@@ -2,6 +2,7 @@ import 'package:beauty_app_mobile/core/common/custom_button.dart';
 import 'package:beauty_app_mobile/core/utils/palette.dart';
 import 'package:beauty_app_mobile/features/appointments/views/appointment_finish_view.dart';
 import 'package:beauty_app_mobile/features/appointments/widgets/specialist_appointment_widget.dart';
+import 'package:beauty_app_mobile/features/barber_shop/views/salon_detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -117,10 +118,12 @@ class AppointmentStartView extends StatelessWidget {
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemBuilder:
-                      (context, index) =>
-                          SpecialistAppointmentWidget(isSelected: index == 0),
+                      (context, index) => SpecialistAppointmentWidget(
+                        specialist: specialists[index],
+                        isSelected: index == 0,
+                      ),
                   separatorBuilder: (context, index) => Gap(4),
-                  itemCount: 7,
+                  itemCount: specialists.length,
                 ),
               ),
               SizedBox(height: 56),

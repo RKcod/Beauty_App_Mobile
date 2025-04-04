@@ -1,5 +1,6 @@
 import 'package:beauty_app_mobile/core/common/custom_button.dart';
 import 'package:beauty_app_mobile/features/appointments/views/appointment_success_view.dart';
+import 'package:beauty_app_mobile/features/barber_shop/views/home_view.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/salon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -25,7 +26,7 @@ class AppointmentFinishView extends StatelessWidget {
               ),
             ),
             Gap(40),
-            SalonWidget(),
+            SalonWidget(salon: salons[2]),
             Gap(30),
             Text(
               "Services",

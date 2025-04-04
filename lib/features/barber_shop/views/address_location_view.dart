@@ -76,12 +76,13 @@ class _AddressLocationViewState extends ConsumerState<AddressLocationView> {
               leading: Icon(Icons.search, color: Color(0xffABAAB1)),
               onChanged: (value) {
                 searchText = value;
-                setState(() {});
 
                 fetchAddressOperation?.cancel();
                 fetchAddressOperation = CancelableOperation.fromFuture(
                   onSearch(value),
                 );
+
+                setState(() {});
               },
             ),
             Gap(28),

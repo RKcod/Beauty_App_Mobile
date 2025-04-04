@@ -1,10 +1,12 @@
+import 'package:beauty_app_mobile/models/salon_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:gap/gap.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class SalonWidget extends StatelessWidget {
-  const SalonWidget({super.key});
+  final SalonModel salon;
+  const SalonWidget({super.key, required this.salon});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class SalonWidget extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               image: DecorationImage(
-                image: AssetImage("assets/images/image_barber.jpg"),
+                image: AssetImage(salon.imageUrl),
                 fit: BoxFit.cover,
               ),
             ),
@@ -30,7 +32,7 @@ class SalonWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Jawed Habib",
+                    salon.name,
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
@@ -39,7 +41,7 @@ class SalonWidget extends StatelessWidget {
                   ),
                   Gap(4),
                   Text(
-                    "6391 Elgin St. Celina, Delaware 10299",
+                    salon.address,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -52,7 +54,7 @@ class SalonWidget extends StatelessWidget {
                   Row(
                     children: [
                       StarRating(
-                        rating: 4.5,
+                        rating: salon.rating,
                         allowHalfRating: false,
                         onRatingChanged: null,
                         size: 16,
@@ -64,7 +66,7 @@ class SalonWidget extends StatelessWidget {
                       Icon(Icons.location_on_outlined, size: 14),
                       Gap(4),
                       Text(
-                        "5 km",
+                        "${salon.distance} km",
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w400,

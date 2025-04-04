@@ -49,6 +49,7 @@ class GetLocationView extends StatelessWidget {
               isFullWidth: true,
               onPressed: () async {
                 await determinePosition();
+                print("Take position");
 
                 if (!context.mounted) return;
                 Navigator.push(

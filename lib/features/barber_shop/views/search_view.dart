@@ -1,5 +1,6 @@
 import 'package:beauty_app_mobile/core/common/custom_textfield.dart';
 import 'package:beauty_app_mobile/core/utils/palette.dart';
+import 'package:beauty_app_mobile/features/barber_shop/views/home_view.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/salon_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -81,7 +82,8 @@ class _SearchViewState extends State<SearchView> {
             Gap(20),
             Expanded(
               child: ListView.separated(
-                itemBuilder: (context, index) => SalonWidget(),
+                itemBuilder:
+                    (context, index) => SalonWidget(salon: salons[index % 6]),
                 separatorBuilder: (context, index) => Gap(12),
                 itemCount: 20,
               ),
