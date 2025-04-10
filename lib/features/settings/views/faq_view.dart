@@ -1,3 +1,4 @@
+import 'package:beauty_app_mobile/core/utils/palette.dart';
 import 'package:beauty_app_mobile/features/settings/widgets/settings_title.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -51,7 +52,7 @@ class _FaqViewState extends State<FaqView> {
                                 expandedStates[index]
                                     ? Icons.remove
                                     : Icons.add,
-                                color: Color(0xffABAAB1),
+                                color: Palette.primaryColor,
                               ),
                               children: [
                                 Padding(

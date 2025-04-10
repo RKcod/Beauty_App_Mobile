@@ -2,6 +2,7 @@ import 'package:beauty_app_mobile/core/common/custom_button.dart';
 import 'package:beauty_app_mobile/core/common/custom_dropdown.dart';
 import 'package:beauty_app_mobile/core/common/custom_textfield.dart';
 import 'package:beauty_app_mobile/core/packages/intl_phone_number_field/intl_phone_number_field.dart';
+import 'package:beauty_app_mobile/core/utils/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -40,7 +41,7 @@ class EditProfileView extends StatelessWidget {
                       Gap(16),
                       Text(
                         "Change Avatar",
-                        style: TextStyle(color: Color(0xff432BDF)),
+                        style: TextStyle(color: Palette.primaryColor),
                       ),
                     ],
                   ),

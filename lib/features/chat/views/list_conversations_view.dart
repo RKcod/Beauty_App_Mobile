@@ -1,17 +1,19 @@
+import 'package:beauty_app_mobile/core/utils/palette.dart';
 import 'package:beauty_app_mobile/features/chat/views/chat_view.dart';
 import 'package:beauty_app_mobile/features/chat/widgets/conversation_item.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class ListConversationsView extends StatefulWidget {
-  const ListConversationsView({super.key});
+  final ScrollController? controller;
+  const ListConversationsView({super.key, this.controller});
 
   @override
   State<ListConversationsView> createState() => _ListConversationsViewState();
 }
 
 class _ListConversationsViewState extends State<ListConversationsView> {
-  var itemsTab = ["Messages", "Groups", "Calls"];
+  var itemsTab = ["Messages", "Calls"];
   int selectTabIndex = 0;
 
   @override
@@ -35,9 +37,9 @@ class _ListConversationsViewState extends State<ListConversationsView> {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Color(0xffDFDEE4)),
+                    border: Border.all(color: Palette.primaryColor),
                   ),
-                  child: Icon(Icons.search),
+                  child: Icon(Icons.search, color: Palette.primaryColor),
                 ),
                 Gap(10),
                 Container(
@@ -45,9 +47,12 @@ class _ListConversationsViewState extends State<ListConversationsView> {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Color(0xffDFDEE4)),
+                    border: Border.all(color: Palette.primaryColor),
                   ),
-                  child: Icon(Icons.settings_outlined),
+                  child: Icon(
+                    Icons.settings_outlined,
+                    color: Palette.primaryColor,
+                  ),
                 ),
               ],
             ),
@@ -72,7 +77,7 @@ class _ListConversationsViewState extends State<ListConversationsView> {
                         decoration: BoxDecoration(
                           color:
                               index == selectTabIndex
-                                  ? Color(0xff191632)
+                                  ? Palette.primaryColor
                                   : Colors.transparent,
                           borderRadius: BorderRadius.circular(24),
                         ),
@@ -98,6 +103,7 @@ class _ListConversationsViewState extends State<ListConversationsView> {
             Gap(32),
             Expanded(
               child: ListView.separated(
+                controller: widget.controller,
                 itemBuilder:
                     (context, index) => GestureDetector(
                       onTap: () {

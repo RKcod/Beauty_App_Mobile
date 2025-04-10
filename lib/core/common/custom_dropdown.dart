@@ -53,7 +53,7 @@ class CustomDropdown extends StatelessWidget {
                         .toList(),
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: const Color(0xffF2F2F2),
+                  fillColor: const Color(0xffF2F2F2).withValues(alpha: 0.5),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 0,
                     vertical: 18,

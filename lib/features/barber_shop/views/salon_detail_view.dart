@@ -224,24 +224,51 @@ class _SalonDetailViewState extends State<SalonDetailView> {
                           mainAxisSize: MainAxisSize.min,
                           spacing: 6,
                           children: [
-                            Icon(Icons.travel_explore),
-                            Text("Website", style: TextStyle(fontSize: 13)),
+                            Icon(
+                              Icons.travel_explore,
+                              color: Palette.primaryColor,
+                            ),
+                            Text(
+                              "Website",
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Palette.primaryColor,
+                              ),
+                            ),
                           ],
                         ),
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           spacing: 6,
                           children: [
-                            Icon(Icons.call_outlined),
-                            Text("Call", style: TextStyle(fontSize: 13)),
+                            Icon(
+                              Icons.call_outlined,
+                              color: Palette.primaryColor,
+                            ),
+                            Text(
+                              "Call",
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Palette.primaryColor,
+                              ),
+                            ),
                           ],
                         ),
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           spacing: 6,
                           children: [
-                            Icon(Icons.location_on_outlined),
-                            Text("Direction", style: TextStyle(fontSize: 13)),
+                            Icon(
+                              Icons.location_on_outlined,
+                              color: Palette.primaryColor,
+                            ),
+                            Text(
+                              "Direction",
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Palette.primaryColor,
+                              ),
+                            ),
                           ],
                         ),
                         GestureDetector(
@@ -259,8 +286,14 @@ class _SalonDetailViewState extends State<SalonDetailView> {
                             mainAxisSize: MainAxisSize.min,
                             spacing: 6,
                             children: [
-                              Icon(Icons.share),
-                              Text("Share", style: TextStyle(fontSize: 13)),
+                              Icon(Icons.share, color: Palette.primaryColor),
+                              Text(
+                                "Share",
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: Palette.primaryColor,
+                                ),
+                              ),
                             ],
                           ),
                         ),

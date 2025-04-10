@@ -44,7 +44,8 @@ class CustomTextfield extends StatelessWidget {
     this.borderColor = Colors.black26,
     this.hasBorder = false,
     this.height,
-  }) : backgroundColor = backgroundColor ?? const Color(0xffF2F2F2);
+  }) : backgroundColor =
+           backgroundColor ?? const Color(0xffF2F2F2).withValues(alpha: 0.5);
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +133,6 @@ class CustomTextfield extends StatelessWidget {
                 fontSize: 13,
                 fontWeight: FontWeight.w400,
                 fontStyle: FontStyle.italic,
-                fontFamily: "ParkinsansLight",
               ),
             ),
           ),

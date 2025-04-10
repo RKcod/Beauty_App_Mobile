@@ -1,4 +1,5 @@
 import 'package:beauty_app_mobile/core/common/custom_button.dart';
+import 'package:beauty_app_mobile/core/utils/palette.dart';
 import 'package:beauty_app_mobile/features/appointments/views/appointment_success_view.dart';
 import 'package:beauty_app_mobile/features/barber_shop/views/home_view.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/salon_widget.dart';
@@ -53,7 +54,10 @@ class AppointmentFinishView extends StatelessWidget {
                     Spacer(),
                     Text(
                       "\$5.00",
-                      style: TextStyle(fontSize: 15, color: Color(0xff432BDF)),
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Palette.primaryColor,
+                      ),
                     ),
                   ],
                 ),
@@ -69,7 +73,7 @@ class AppointmentFinishView extends StatelessWidget {
                 ),
                 Text(
                   "12 September, 12:00",
-                  style: TextStyle(fontSize: 15, color: Color(0xff432BDF)),
+                  style: TextStyle(fontSize: 15, color: Palette.primaryColor),
                 ),
               ],
             ),

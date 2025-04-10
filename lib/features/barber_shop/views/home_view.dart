@@ -55,7 +55,8 @@ var salons = [
 ];
 
 class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+  final ScrollController? controller;
+  const HomeView({super.key, this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +69,7 @@ class HomeView extends StatelessWidget {
 
     return Scaffold(
       body: SingleChildScrollView(
+        controller: controller,
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(
@@ -92,10 +94,13 @@ class HomeView extends StatelessWidget {
                     height: 42,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Color(0xffDFDEE4)),
+                      border: Border.all(color: Palette.primaryColor),
                     ),
                     child: Center(
-                      child: Icon(Icons.notifications_none_outlined),
+                      child: Icon(
+                        Icons.notifications_none_outlined,
+                        color: Palette.primaryColor,
+                      ),
                     ),
                   ),
                   Gap(10),
@@ -104,9 +109,14 @@ class HomeView extends StatelessWidget {
                     height: 42,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Color(0xffDFDEE4)),
+                      border: Border.all(color: Palette.primaryColor),
                     ),
-                    child: Center(child: Icon(Icons.favorite_border)),
+                    child: Center(
+                      child: Icon(
+                        Icons.favorite_border,
+                        color: Palette.primaryColor,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -125,7 +135,7 @@ class HomeView extends StatelessWidget {
                   Icon(
                     Icons.location_on_outlined,
                     size: 16,
-                    color: Color(0xffABAAB1),
+                    color: Palette.primaryColor,
                   ),
                   Gap(6),
                   Text(
@@ -133,7 +143,7 @@ class HomeView extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w400,
-                      color: Color(0xffABAAB1),
+                      color: Palette.primaryColor,
                     ),
                   ),
                 ],
@@ -177,22 +187,29 @@ class HomeView extends StatelessWidget {
               ),
               Gap(12),
               SizedBox(
-                height: 64,
+                height: 91,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemBuilder:
-                      (context, index) => CircleAvatar(
-                        radius: 28,
-                        backgroundColor: Palette.primaryColor.withValues(
-                          alpha: 0.4,
-                        ),
-                        child: Icon(
-                          iconsService[index % 4],
-                          color: Colors.white,
-                          size: 20,
-                        ),
+                      (context, index) => Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CircleAvatar(
+                            radius: 28,
+                            backgroundColor: Palette.primaryColor.withValues(
+                              alpha: 0.4,
+                            ),
+                            child: Icon(
+                              iconsService[index % 4],
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                          Gap(12),
+                          Text("Haircut", style: TextStyle(fontSize: 12)),
+                        ],
                       ),
-                  separatorBuilder: (context, index) => Gap(8),
+                  separatorBuilder: (context, index) => Gap(16),
                   itemCount: 10,
                 ),
               ),
@@ -205,7 +222,7 @@ class HomeView extends StatelessWidget {
                     width: double.infinity,
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Color(0xffF2F2F2),
+                      color: Color(0xffF2F2F2).withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Column(
@@ -214,6 +231,7 @@ class HomeView extends StatelessWidget {
                         Text(
                           "-40%",
                           style: TextStyle(
+                            color: Palette.primaryColor,
                             fontSize: 30,
                             fontWeight: FontWeight.w600,
                             fontFamily: "PoppinsBold",

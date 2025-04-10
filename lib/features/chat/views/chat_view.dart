@@ -56,9 +56,9 @@ class ChatView extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Color(0xffDFDEE4)),
+                    border: Border.all(color: Palette.primaryColor),
                   ),
-                  child: Icon(Icons.call_outlined),
+                  child: Icon(Icons.call_outlined, color: Palette.primaryColor),
                 ),
                 Gap(10),
                 Container(
@@ -66,9 +66,12 @@ class ChatView extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Color(0xffDFDEE4)),
+                    border: Border.all(color: Palette.primaryColor),
                   ),
-                  child: Icon(Icons.videocam_outlined),
+                  child: Icon(
+                    Icons.videocam_outlined,
+                    color: Palette.primaryColor,
+                  ),
                 ),
               ],
             ),

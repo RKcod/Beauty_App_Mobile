@@ -137,8 +137,8 @@ class _AppointmentWidgetState extends State<AppointmentWidget> {
                         CustomButton(
                           text: "Review",
                           transparent: true,
-                          colorText: Colors.black,
-                          border: BorderSide(color: Colors.black),
+                        colorText: Palette.primaryColor,
+                          border: BorderSide(color: Palette.primaryColor),
                           radius: 8,
                         ),
                         Gap(10),

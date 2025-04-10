@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
+  final ScrollController? controller;
+  const ProfileView({super.key, this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,7 @@ class ProfileView extends StatelessWidget {
 
     return Scaffold(
       body: SingleChildScrollView(
+        controller: controller,
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(
@@ -66,12 +68,15 @@ class ProfileView extends StatelessWidget {
                       height: 42,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: Color(0xffDFDEE4)),
+                        border: Border.all(color: Palette.primaryColor),
                       ),
                       child: Center(
                         child: Stack(
                           children: [
-                            Icon(Icons.notifications_none_outlined),
+                            Icon(
+                              Icons.notifications_none_outlined,
+                              color: Palette.primaryColor,
+                            ),
                             Positioned(
                               top: 2,
                               right: 2,
@@ -91,9 +96,14 @@ class ProfileView extends StatelessWidget {
                     height: 42,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Color(0xffDFDEE4)),
+                      border: Border.all(color: Palette.primaryColor),
                     ),
-                    child: Center(child: Icon(Icons.favorite_border)),
+                    child: Center(
+                      child: Icon(
+                        Icons.favorite_border,
+                        color: Palette.primaryColor,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -113,7 +123,11 @@ class ProfileView extends StatelessWidget {
                             builder: (context) => const EditProfileView(),
                           ),
                         ),
-                    child: Icon(Icons.edit, size: 16, color: Color(0xff432BDF)),
+                    child: Icon(
+                      Icons.edit,
+                      size: 16,
+                      color: Palette.primaryColor,
+                    ),
                   ),
                 ],
               ),
@@ -134,14 +148,14 @@ class ProfileView extends StatelessWidget {
                       color: Colors.transparent,
                       child: Row(
                         children: [
-                          Icon(items[index].icon),
+                          Icon(items[index].icon, color: Palette.primaryColor),
                           Gap(12),
                           Text(items[index].text),
                           Spacer(),
                           Icon(
                             Icons.chevron_right,
                             size: 20,
-                            color: Color(0xffABAAB1),
+                            color: Palette.primaryColor,
                           ),
                         ],
                       ),

@@ -68,7 +68,7 @@ class AppointmentSuccessView extends StatelessWidget {
                     isFullWidth: true,
                     transparent: true,
                     text: "Go to appointment",
-                    colorText: Color(0xff432BDF),
+                    colorText: Palette.primaryColor,
                   ),
                 ],
               ),

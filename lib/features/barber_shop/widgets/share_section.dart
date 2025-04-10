@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 class ShareSection extends StatelessWidget {
   const ShareSection({super.key});

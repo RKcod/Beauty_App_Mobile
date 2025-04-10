@@ -1,3 +1,4 @@
+import 'package:beauty_app_mobile/core/utils/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -58,7 +59,7 @@ class ConversationItem extends StatelessWidget {
                       ),
                       CircleAvatar(
                         radius: 10,
-                        backgroundColor: Color(0xffFB3030),
+                        backgroundColor: Palette.primaryColor,
                         child: Center(
                           child: Text(
                             "1",

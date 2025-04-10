@@ -1,10 +1,12 @@
 import 'package:beauty_app_mobile/core/enums/enums.dart';
+import 'package:beauty_app_mobile/core/utils/palette.dart';
 import 'package:beauty_app_mobile/features/appointments/widgets/appointment_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class AppointmentListView extends StatefulWidget {
-  const AppointmentListView({super.key});
+  final ScrollController? controller;
+  const AppointmentListView({super.key, this.controller});
 
   @override
   State<AppointmentListView> createState() => _AppointmentListViewState();
@@ -40,7 +42,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
                       decoration: BoxDecoration(
                         color:
                             appointmentType == AppointmentStatus.upcoming
-                                ? Color(0xff191632)
+                                ? Palette.primaryColor
                                 : null,
                         borderRadius: BorderRadius.circular(16),
                       ),
@@ -69,7 +71,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
                       decoration: BoxDecoration(
                         color:
                             appointmentType == AppointmentStatus.passed
-                                ? Color(0xff191632)
+                                ? Palette.primaryColor
                                 : null,
                         borderRadius: BorderRadius.circular(16),
                       ),
@@ -92,6 +94,7 @@ class _AppointmentListViewState extends State<AppointmentListView> {
             Gap(24),
             Expanded(
               child: ListView.separated(
+                controller: widget.controller,
                 itemBuilder:
                     (context, index) =>
                         AppointmentWidget(status: appointmentType),

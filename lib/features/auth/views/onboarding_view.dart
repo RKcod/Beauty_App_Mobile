@@ -84,7 +84,17 @@ class _OnboardingViewState extends State<OnboardingView> {
               children: [
                 Opacity(
                   opacity: 0,
-                  child: CustomButton(text: "Start", onPressed: () {}),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 16),
+                    child: Text(
+                      "Start",
+                      style: TextStyle(
+                        color: Palette.primaryColor,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
                 DotIndicator(
                   length: 3,
@@ -94,20 +104,43 @@ class _OnboardingViewState extends State<OnboardingView> {
                 ),
                 Opacity(
                   opacity: currentIndex == 2 ? 1 : 0,
-                  child: CustomButton(
-                    text: "Start",
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (builder) => const SignUpView(),
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 16),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (builder) => const SignUpView(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Start",
+                        style: TextStyle(
+                          color: Palette.primaryColor,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          // fontFamily: "PoppinsBold",
                         ),
-                      );
-                    },
+                      ),
+                    ),
                   ),
+                  // child: CustomButton(
+                  //   text: "Start",
+                  //   onPressed: () {
+                  //     Navigator.pushReplacement(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //         builder: (builder) => const SignUpView(),
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
                 ),
               ],
             ),
+            Gap(16),
           ],
         ),
       ),
