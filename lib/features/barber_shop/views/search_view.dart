@@ -31,7 +31,7 @@ class _SearchViewState extends State<SearchView> {
                     hintText: "Search by Salons",
                     initialText: "Salon",
                     leading: Icon(Icons.search, color: Color(0xffABAAB1)),
-                    trailing: Icon(BoxIcons.bx_filter),
+                    trailing: Icon(MingCute.settings_2_line),
                   ),
                 ),
                 Gap(12),

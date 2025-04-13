@@ -160,7 +160,7 @@ class HomeView extends StatelessWidget {
                   hintText: "Search by Salons",
                   enabled: false,
                   leading: Icon(Icons.search, color: Color(0xffABAAB1)),
-                  trailing: Icon(BoxIcons.bx_filter),
+                  trailing: Icon(MingCute.settings_2_line),
                 ),
               ),
               Gap(32),
@@ -196,9 +196,7 @@ class HomeView extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 28,
-                            backgroundColor: Palette.primaryColor.withValues(
-                              alpha: 0.4,
-                            ),
+                            backgroundColor: Palette.primaryColor,
                             child: Icon(
                               iconsService[index % 4],
                               color: Colors.white,

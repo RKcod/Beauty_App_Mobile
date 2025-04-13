@@ -28,6 +28,8 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        resValue("string", "mapbox_access_token", "<YOUR_MAPBOX_ACCESS_TOKEN>")
     }
 
     buildTypes {

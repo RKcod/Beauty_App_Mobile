@@ -2,6 +2,7 @@ import 'package:beauty_app_mobile/core/packages/water_drop_nav_bar/water_drop_na
 import 'package:beauty_app_mobile/core/utils/palette.dart';
 import 'package:beauty_app_mobile/features/appointments/views/appointment_list_view.dart';
 import 'package:beauty_app_mobile/features/barber_shop/views/home_view.dart';
+import 'package:beauty_app_mobile/features/barber_shop/views/search_map_view.dart';
 import 'package:beauty_app_mobile/features/chat/views/list_conversations_view.dart';
 import 'package:beauty_app_mobile/features/settings/views/profile_view.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,7 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
         body:
             (context, controller) => switch (selectedIndex) {
               0 => HomeView(controller: controller),
-              1 => HomeView(controller: controller),
+              1 => SearchMapView(),
               2 => AppointmentListView(controller: controller),
               3 => ListConversationsView(controller: controller),
               4 => ProfileView(controller: controller),

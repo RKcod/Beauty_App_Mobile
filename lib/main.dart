@@ -1,19 +1,12 @@
 import 'package:beauty_app_mobile/core/common/custom_safe_area.dart';
-import 'package:beauty_app_mobile/features/appointments/views/appointment_list_view.dart';
-import 'package:beauty_app_mobile/features/auth/views/onboarding_view.dart';
+import 'package:beauty_app_mobile/core/constants/constants.dart';
 import 'package:beauty_app_mobile/features/barber_shop/views/bottom_navigation_view.dart';
-import 'package:beauty_app_mobile/features/barber_shop/views/get_location_view.dart';
-import 'package:beauty_app_mobile/features/barber_shop/views/home_view.dart';
-import 'package:beauty_app_mobile/features/chat/views/list_conversations_view.dart';
-import 'package:beauty_app_mobile/features/settings/views/edit_profile_view.dart';
-import 'package:beauty_app_mobile/features/settings/views/faq_view.dart';
-import 'package:beauty_app_mobile/features/settings/views/notifications_view.dart';
-import 'package:beauty_app_mobile/features/settings/views/profile_view.dart';
 import 'package:beauty_app_mobile/theme/theme_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/providers/providers.dart';
@@ -25,6 +18,7 @@ void main() async {
 
   await Future.delayed(const Duration(seconds: 5));
   FlutterNativeSplash.remove();
+  MapboxOptions.setAccessToken(Constants.mapboxToken);
 
   runApp(
     ProviderScope(
@@ -107,7 +101,7 @@ class _MyAppState extends State<MyApp> {
         pageTransitionsTheme: ThemeApp.pageTransition,
       ),
       themeMode: ThemeMode.light,
-      home: OnboardingView(),
+      home: BottomNavigationView(),
     );
   }
 }
