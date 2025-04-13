@@ -159,7 +159,7 @@ class SearchMapViewState extends State<SearchMapView> {
 
                         print(
                           "Place "
-                          "${searchPlace.success?.features.first.properties.coordinates.location}",
+                          // "${searchPlace.success?.features.first.properties.coordinates.lcation}",
                         );
                         places.add(searchPlace.success!.features.first);
                       }
