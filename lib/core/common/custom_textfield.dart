@@ -117,7 +117,7 @@ class CustomTextfield extends StatelessWidget {
               ),
               if (trailing != null)
                 Padding(
-                  padding: const EdgeInsets.only(right: 8),
+                  padding: const EdgeInsets.only(right: 0),
                   child: trailing,
                 ),
             ],

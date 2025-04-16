@@ -6,6 +6,7 @@ import 'package:beauty_app_mobile/features/barber_shop/views/search_map_view.dar
 import 'package:beauty_app_mobile/features/chat/views/list_conversations_view.dart';
 import 'package:beauty_app_mobile/features/settings/views/profile_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
 
 class BottomNavigationView extends StatefulWidget {
@@ -36,7 +37,6 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
         showIcon: false,
         width: MediaQuery.of(context).size.width,
         barColor: Colors.transparent,
-
         start: 2,
         end: 0,
         offset: 0,

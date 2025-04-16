@@ -7,10 +7,7 @@ import 'package:dio/dio.dart';
 import '../core/constants/constants.dart';
 
 class ResponseData {
-  ResponseData({
-    required this.data,
-    required this.isSuccessful,
-  });
+  ResponseData({required this.data, required this.isSuccessful});
 
   dynamic data;
   bool isSuccessful;
@@ -25,31 +22,32 @@ class ApiProvider {
 
   String? baseUrl;
 
-  Future<ResponseData> launchRequest(
-      {String? baseUrl,
-      required String endPoint,
-      required String method,
-      Map<String, dynamic>? body,
-      Map<String, String>? headers,
-      Map<String, dynamic>? queryParams,
-      isFromData = false}) async {
+  Future<ResponseData> launchRequest({
+    String? baseUrl,
+    required String endPoint,
+    required String method,
+    Map<String, dynamic>? body,
+    Map<String, String>? headers,
+    Map<String, dynamic>? queryParams,
+    isFromData = false,
+  }) async {
     var url = (baseUrl ?? this.baseUrl!) + endPoint;
 
-    var headersWithContentType = {
-      "content-type": "application/json",
-    };
+    var headersWithContentType = {"content-type": "application/json"};
 
     if (headers != null) {
       headersWithContentType.addAll(headers);
     }
 
     try {
-      print(url);
+      print("Lien de l'url $url");
       switch (method.toUpperCase()) {
         case "GET":
-          var response = await _client.get(url,
-              queryParameters: queryParams,
-              options: Options(headers: headersWithContentType));
+          var response = await _client.get(
+            url,
+            queryParameters: queryParams,
+            options: Options(headers: headersWithContentType),
+          );
 
           if (response.statusCode == 200 || response.statusCode == 201) {
             return ResponseData(data: response.data, isSuccessful: true);
@@ -72,10 +70,12 @@ class ApiProvider {
           }
 
         case "PUT":
-          var response = await _client.put(url,
-              data: jsonEncode(body),
-              queryParameters: queryParams,
-              options: Options(headers: headersWithContentType));
+          var response = await _client.put(
+            url,
+            data: jsonEncode(body),
+            queryParameters: queryParams,
+            options: Options(headers: headersWithContentType),
+          );
 
           if (response.statusCode == 200 || response.statusCode == 201) {
             return ResponseData(data: response.data, isSuccessful: true);
@@ -84,9 +84,11 @@ class ApiProvider {
           }
 
         case "DELETE":
-          var response = await _client.delete(url,
-              queryParameters: queryParams,
-              options: Options(headers: headersWithContentType));
+          var response = await _client.delete(
+            url,
+            queryParameters: queryParams,
+            options: Options(headers: headersWithContentType),
+          );
 
           if (response.statusCode == 200 || response.statusCode == 201) {
             return ResponseData(data: response.data, isSuccessful: true);
