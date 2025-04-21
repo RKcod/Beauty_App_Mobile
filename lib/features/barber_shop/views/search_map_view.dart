@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:beauty_app_mobile/core/common/custom_textfield.dart';
 import 'package:beauty_app_mobile/core/constants/constants.dart';
 import 'package:beauty_app_mobile/core/providers/providers.dart';
@@ -19,9 +17,14 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 
 class AnnotationClickListener extends OnPointAnnotationClickListener {
+  final void Function(PointAnnotation annotation) onAnnotationClick;
+
+  AnnotationClickListener({required this.onAnnotationClick});
+
   @override
   void onPointAnnotationClick(PointAnnotation annotation) {
     print("onAnnotationClick, id: ${annotation.id}");
+    onAnnotationClick(annotation);
   }
 }
 
@@ -39,43 +42,93 @@ class SearchMapViewState extends ConsumerState<SearchMapView> {
   CoordinateBounds? boundsCamera;
 
   PointAnnotationManager? pointAnnotationManager;
+  Uint8List? image;
+  bool loadAnnotation = false;
+  AddressGeo? selectedPlace;
+  List<AddressGeo> places = [];
+  AddressGeo? lastItem;
 
   bool isLoading = false;
 
-  List<AddressGeoapify> responsePlaceToAddress(Map<String, dynamic> data) {
+  Future<void> moveMap({required CameraOptions options}) async {
+    await pointAnnotationManager?.deleteAll();
+    await handleGesture(false);
+    mapboxMap?.flyTo(options, mapAnimation);
+  }
+
+  Future<void> handleGesture(bool active) async {
+    return mapboxMap?.gestures.updateSettings(
+      GesturesSettings(
+        rotateEnabled: active,
+        scrollEnabled: active,
+        pinchToZoomEnabled: active,
+        doubleTapToZoomInEnabled: active,
+        doubleTouchToZoomOutEnabled: active,
+        quickZoomEnabled: active,
+        pitchEnabled: active,
+        pinchPanEnabled: active,
+      ),
+    );
+  }
+
+  List<AddressGeo> responsePlaceToAddress(Map<String, dynamic> data) {
     return List<Map<String, dynamic>>.from(
       data["features"],
-    ).map((item) => AddressGeoapify.fromMap(item["properties"])).toList();
+    ).map((item) => AddressGeo.fromMap(item["properties"])).toList();
   }
 
   _onMapCreated(MapboxMap value) async {
     mapboxMap = value;
 
+    final ByteData bytes = await rootBundle.load('assets/symbols/marker.png');
+    image = bytes.buffer.asUint8List();
+
+    pointAnnotationManager =
+        await value.annotations.createPointAnnotationManager();
+    pointAnnotationManager?.addOnPointAnnotationClickListener(
+      AnnotationClickListener(
+        onAnnotationClick: (annotation) {
+          print(places);
+          selectedPlace = places.firstWhere(
+            (place) =>
+                place.lon == annotation.geometry.coordinates.lng &&
+                place.lat == annotation.geometry.coordinates.lat,
+          );
+          print("Selected place : ${selectedPlace?.addressLine1}");
+
+          setState(() {});
+        },
+      ),
+    );
     // value.logo.updateSettings(LogoSettings(enabled: false));
     // value.attribution.updateSettings(AttributionSettings(enabled: false));
   }
 
   _onCameraChangeListener(CameraChangedEventData data) async {
+    if (selectedPlace != null) {
+      selectedPlace = null;
+      setState(() {});
+    }
+  }
+
+  _onMapIdleListener(MapIdleEventData data) async {
+    print("Map idle");
     if (mapboxMap == null) return;
+
+    if (loadAnnotation) {
+      loadAnnotation = false;
+      return;
+    }
+    places = [];
     pointAnnotationManager?.deleteAll();
 
     isLoading = true;
     setState(() {});
-    await mapboxMap?.gestures.updateSettings(
-      GesturesSettings(
-        rotateEnabled: false,
-        scrollEnabled: false,
-        pinchToZoomEnabled: false,
-        doubleTapToZoomInEnabled: false,
-        doubleTouchToZoomOutEnabled: false,
-        quickZoomEnabled: false,
-        pitchEnabled: false,
-        pinchPanEnabled: false,
-      ),
-    );
+    await handleGesture(false);
 
+    var cameraState = await mapboxMap!.getCameraState();
     var cameraBounds = await mapboxMap?.coordinateBoundsForCamera(
-      data.cameraState.toCameraOptions(),
+      cameraState.toCameraOptions(),
     );
     var coordinates = boundsCoordinate(cameraBounds!);
     print("Camera bounds : $coordinates");
@@ -97,86 +150,34 @@ class SearchMapViewState extends ConsumerState<SearchMapView> {
 
       print("Response : ${response.data}");
 
-      var places = responsePlaceToAddress(response.data);
+      places = responsePlaceToAddress(response.data);
 
       if (places.isEmpty) return;
-      await mapboxMap?.annotations.createPointAnnotationManager().then((
-        value,
-      ) async {
-        pointAnnotationManager = value;
 
-        final ByteData bytes = await rootBundle.load(
-          'assets/symbols/custom-icon.png',
+      // createOneAnnotation(value, list);
+
+      List<PointAnnotationOptions> options = [];
+      for (var place in places) {
+        options.add(
+          PointAnnotationOptions(
+            geometry: Point(coordinates: Position(place.lon, place.lat)),
+            iconSize: 2,
+            iconOffset: [0.0, -5.0],
+            symbolSortKey: 10,
+            image: image,
+          ),
         );
-        final Uint8List list = bytes.buffer.asUint8List();
-        // createOneAnnotation(value, list);
-
-        List<PointAnnotationOptions> options = [];
-        for (var place in places) {
-          options.add(
-            PointAnnotationOptions(
-              geometry: Point(coordinates: Position(place.lon, place.lat)),
-              textField: place.addressLine1,
-              textSize: 11,
-              textOffset: [0.0, -2.0],
-              textColor: Palette.primaryColor.toARGB32(),
-              iconSize: 1.3,
-              iconOffset: [0.0, -5.0],
-              symbolSortKey: 10,
-              image: list,
-            ),
-          );
-        }
-        value.createMulti(options);
-        value.addOnPointAnnotationClickListener(AnnotationClickListener());
-        return;
-      });
+      }
+      await pointAnnotationManager?.createMulti(options);
+      loadAnnotation = true;
     } catch (e) {
-      if (!context.mounted) return;
+      if (!mounted) return;
       showToast(context, content: "Une erreur est survenue");
     } finally {
-      mapboxMap?.gestures.updateSettings(
-        GesturesSettings(
-          rotateEnabled: true,
-          scrollEnabled: true,
-          pinchToZoomEnabled: true,
-          doubleTapToZoomInEnabled: true,
-          doubleTouchToZoomOutEnabled: true,
-          quickZoomEnabled: true,
-          pitchEnabled: true,
-          pinchPanEnabled: true,
-        ),
-      );
+      handleGesture(true);
       isLoading = false;
       setState(() {});
     }
-  }
-
-  Position createRandomPosition() {
-    var random = Random();
-    return Position(
-      random.nextDouble() * -360.0 + 180.0,
-      random.nextDouble() * -180.0 + 90.0,
-    );
-  }
-
-  Point createRandomPoint() {
-    return Point(coordinates: createRandomPosition());
-  }
-
-  void createOneAnnotation(PointAnnotationManager manager, Uint8List list) {
-    manager.create(
-      PointAnnotationOptions(
-        geometry: Point(coordinates: Position(0.381457, 6.687337)),
-        textField: "custom-icon",
-        textOffset: [0.0, -2.0],
-        textColor: Colors.red.value,
-        iconSize: 1.3,
-        iconOffset: [0.0, -5.0],
-        symbolSortKey: 10,
-        image: list,
-      ),
-    );
   }
 
   @override
@@ -196,8 +197,8 @@ class SearchMapViewState extends ConsumerState<SearchMapView> {
                   cameraOptions: CameraOptions(
                     center: Point(
                       coordinates: Position(
-                        6.0033416748046875,
-                        43.70908256335716,
+                        9.70639355677473,
+                        4.061348949999999,
                       ),
                     ),
                     zoom: 14,
@@ -205,6 +206,7 @@ class SearchMapViewState extends ConsumerState<SearchMapView> {
                   // styleUri: MapboxStyles.STANDARD,
                   onMapCreated: _onMapCreated,
                   onCameraChangeListener: _onCameraChangeListener,
+                  onMapIdleListener: _onMapIdleListener,
                 ),
                 Positioned(
                   top: MediaQuery.paddingOf(context).top + 32,
@@ -257,28 +259,29 @@ class SearchMapViewState extends ConsumerState<SearchMapView> {
                                           ),
                                 );
                               },
-                              itemBuilder: (
-                                context,
-                                AddressGeoapify suggestion,
-                              ) {
+                              itemBuilder: (context, AddressGeo suggestion) {
                                 return ListTile(
                                   title: Text(suggestion.addressLine1),
                                 );
                               },
-                              onSelected: (AddressGeoapify suggestion) async {
+                              onSelected: (AddressGeo suggestion) async {
+                                lastItem = suggestion;
                                 controller.text = suggestion.addressLine1;
                                 FocusManager.instance.primaryFocus?.unfocus();
-                                mapboxMap?.flyTo(
-                                  CameraOptions(
+
+                                isLoading = true;
+                                setState(() {});
+
+                                moveMap(
+                                  options: CameraOptions(
                                     center: Point(
                                       coordinates: Position(
                                         suggestion.lon,
                                         suggestion.lat,
                                       ),
                                     ),
-                                    zoom: 10,
+                                    zoom: 14,
                                   ),
-                                  mapAnimation,
                                 );
                               },
                               decorationBuilder:
@@ -297,7 +300,7 @@ class SearchMapViewState extends ConsumerState<SearchMapView> {
                                   ),
                               suggestionsCallback: (value) async {
                                 if (value.isEmpty) {
-                                  return List<AddressGeoapify>.empty();
+                                  return List<AddressGeo>.empty();
                                 }
 
                                 var response = await ref
@@ -317,9 +320,7 @@ class SearchMapViewState extends ConsumerState<SearchMapView> {
                                 return List<Map<String, dynamic>>.from(
                                       response.data["results"],
                                     )
-                                    .map(
-                                      (item) => AddressGeoapify.fromMap(item),
-                                    )
+                                    .map((item) => AddressGeo.fromMap(item))
                                     .toList();
                               },
                             ),
@@ -332,10 +333,23 @@ class SearchMapViewState extends ConsumerState<SearchMapView> {
                                 title: "Filter",
                                 body:
                                     (ctx, state) => FilterSalonMap(
-                                      applyFilter: (distance) async {
+                                      lastSearch: lastItem,
+                                      applyFilter: (
+                                        distance,
+                                        aboutLocation,
+                                      ) async {
                                         Navigator.pop(ctx);
-                                        var long = 9.70639355677473;
-                                        var lat = 4.061348949999999;
+
+                                        isLoading = true;
+                                        setState(() {});
+                                        var long =
+                                            aboutLocation == AboutLocation.me
+                                                ? 9.70639355677473
+                                                : lastItem!.lon;
+                                        var lat =
+                                            aboutLocation == AboutLocation.me
+                                                ? 4.061348949999999
+                                                : lastItem!.lat;
 
                                         var response = await ref
                                             .read(apiProvider)
@@ -389,14 +403,14 @@ class SearchMapViewState extends ConsumerState<SearchMapView> {
                                             zoom += 2;
                                           }
                                         }
-                                        mapboxMap?.flyTo(
-                                          CameraOptions(
+
+                                        moveMap(
+                                          options: CameraOptions(
                                             center: Point(
                                               coordinates: Position(long, lat),
                                             ),
                                             zoom: zoom - 2,
                                           ),
-                                          mapAnimation,
                                         );
                                       },
                                     ),
@@ -435,6 +449,26 @@ class SearchMapViewState extends ConsumerState<SearchMapView> {
                     ],
                   ),
                 ),
+                if (selectedPlace != null)
+                  Positioned(
+                    left: 16,
+                    right: 16,
+                    bottom: 16,
+                    child: Container(
+                      padding: const EdgeInsets.all(24),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        selectedPlace!.addressLine1,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),

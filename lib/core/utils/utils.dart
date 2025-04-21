@@ -41,7 +41,7 @@ CoordinatesModel boundsCoordinate(mapbox.CoordinateBounds bounds) {
 }
 
 bool placeInBounds({
-  required AddressGeoapify place,
+  required AddressGeo place,
   required mapbox.CoordinateBounds bounds,
 }) {
   var coordinates = boundsCoordinate(bounds);

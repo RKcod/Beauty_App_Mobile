@@ -3,57 +3,67 @@ import 'package:gap/gap.dart';
 
 import '../utils/palette.dart';
 
-class CustomRadio extends StatelessWidget {
+class CustomRadio<T> extends StatelessWidget {
   final String text;
-  final Object value;
-  final Object? groupValue;
+  final T value;
+  final T? groupValue;
   final Widget? leading;
-  final void Function(Object?) onChanged;
+  final bool isDisabled;
+  final void Function(T?) onChanged;
 
-  const CustomRadio(
-      {super.key,
-      required this.value,
-      this.groupValue,
-      required this.onChanged,
-      required this.text,
-      this.leading});
+  const CustomRadio({
+    super.key,
+    required this.value,
+    this.groupValue,
+    required this.onChanged,
+    required this.text,
+    this.leading,
+    this.isDisabled = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        onChanged(value);
-      },
+      onTap:
+          isDisabled
+              ? null
+              : () {
+                onChanged(value);
+              },
       child: Row(
         children: [
           if (leading != null)
-            Padding(
-              padding: const EdgeInsets.only(right: 16),
-              child: leading,
-            ),
+            Padding(padding: const EdgeInsets.only(right: 16), child: leading),
           Expanded(
+            child: GestureDetector(
               child: Text(
-            text,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                fontFamily: "ParkinsansRegular"),
-          )),
-          const Gap(8),
+                text,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: isDisabled ? Colors.black12 : Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+          ),
+          const Gap(4),
           Radio(
-              value: value,
-              groupValue: groupValue,
-              onChanged: onChanged,
-              fillColor: WidgetStateProperty.resolveWith<Color>(
-                (Set<WidgetState> states) {
-                  if (states.contains(WidgetState.selected)) {
-                    return Palette.primaryColor;
-                  }
+            value: value,
+            groupValue: groupValue,
+            onChanged: isDisabled ? null : onChanged,
+            fillColor: WidgetStateProperty.resolveWith<Color>((
+              Set<WidgetState> states,
+            ) {
+              if (states.contains(WidgetState.selected)) {
+                return Palette.primaryColor;
+              } else if (states.contains(WidgetState.disabled)) {
+                return Colors.black12;
+              }
 
-                  return Colors.black26;
-                },
-              ))
+              return Colors.black87;
+            }),
+          ),
         ],
       ),
     );

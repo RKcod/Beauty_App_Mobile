@@ -1,20 +1,26 @@
 import 'package:beauty_app_mobile/core/common/custom_button.dart';
+import 'package:beauty_app_mobile/core/common/custom_radio.dart';
 import 'package:beauty_app_mobile/core/utils/palette.dart';
+import 'package:beauty_app_mobile/models/address_geoapify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:gap/gap.dart';
 import 'package:icons_plus/icons_plus.dart';
 
+enum AboutLocation { me, lastSearch }
+
 class FilterSalonMap extends StatefulWidget {
-  final void Function(double distance) applyFilter;
-  const FilterSalonMap({super.key, required this.applyFilter});
+  final AddressGeo? lastSearch;
+  final void Function(double distance, AboutLocation aboutLocation) applyFilter;
+  const FilterSalonMap({super.key, this.lastSearch, required this.applyFilter});
 
   @override
   State<FilterSalonMap> createState() => _FilterSalonMapState();
 }
 
 class _FilterSalonMapState extends State<FilterSalonMap> {
-  double distance = 5;
+  double distance = 1;
+  AboutLocation aboutLocation = AboutLocation.me;
 
   @override
   Widget build(BuildContext context) {
@@ -103,8 +109,8 @@ class _FilterSalonMapState extends State<FilterSalonMap> {
               ),
               child: Slider(
                 value: distance,
-                min: 5,
-                max: 50,
+                min: 1,
+                max: 10,
                 label: "${distance.toStringAsFixed(0)} km",
                 divisions: 10,
                 onChanged: (value) {
@@ -114,11 +120,50 @@ class _FilterSalonMapState extends State<FilterSalonMap> {
               ),
             ),
             Gap(30),
+            Text(
+              "Par rapport à :",
+              style: TextStyle(fontSize: 15, fontFamily: "PoppinsBold"),
+            ),
+            Gap(12),
+            Row(
+              children: [
+                SizedBox(
+                  width: 90,
+                  child: CustomRadio<AboutLocation>(
+                    value: AboutLocation.me,
+                    groupValue: aboutLocation,
+                    onChanged: (value) {
+                      aboutLocation = value!;
+                      setState(() {});
+                    },
+                    text: "Moi",
+                  ),
+                ),
+                Gap(16),
+                Expanded(
+                  child: Stack(
+                    children: [
+                      CustomRadio<AboutLocation>(
+                        value: AboutLocation.lastSearch,
+                        groupValue: aboutLocation,
+                        isDisabled: widget.lastSearch == null,
+                        onChanged: (value) {
+                          aboutLocation = value!;
+                          setState(() {});
+                        },
+                        text: "Ma dernière recherche",
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Gap(30),
             CustomButton(
               text: "Apply filter",
               isFullWidth: true,
               onPressed: () {
-                widget.applyFilter(distance);
+                widget.applyFilter(distance, aboutLocation);
               },
             ),
             Gap(16),
