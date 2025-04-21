@@ -1,10 +1,10 @@
 import 'package:beauty_app_mobile/core/common/custom_textfield.dart';
 import 'package:beauty_app_mobile/core/constants/constants.dart';
 import 'package:beauty_app_mobile/core/providers/providers.dart';
-import 'package:beauty_app_mobile/core/utils/palette.dart';
 import 'package:beauty_app_mobile/core/utils/utils.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/filter_salon_map.dart';
 import 'package:beauty_app_mobile/models/address_geoapify.dart';
+import 'package:beauty_app_mobile/models/coordinates_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -43,17 +43,23 @@ class SearchMapViewState extends ConsumerState<SearchMapView> {
 
   PointAnnotationManager? pointAnnotationManager;
   Uint8List? image;
-  bool loadAnnotation = false;
   AddressGeo? selectedPlace;
   List<AddressGeo> places = [];
   AddressGeo? lastItem;
+
+  CameraOptions? previousState;
+  PointAnnotation? point;
 
   bool isLoading = false;
 
   Future<void> moveMap({required CameraOptions options}) async {
     await pointAnnotationManager?.deleteAll();
+    point = null;
     await handleGesture(false);
-    mapboxMap?.flyTo(options, mapAnimation);
+    await mapboxMap?.flyTo(options, mapAnimation);
+
+    await Future.delayed(const Duration(seconds: 2));
+    _onMapIdleListener();
   }
 
   Future<void> handleGesture(bool active) async {
@@ -83,12 +89,30 @@ class SearchMapViewState extends ConsumerState<SearchMapView> {
     final ByteData bytes = await rootBundle.load('assets/symbols/marker.png');
     image = bytes.buffer.asUint8List();
 
+    // final ByteData bytes2 = await rootBundle.load(
+    //   'assets/symbols/marker_en.png',
+    // );
+    // var markerEn = bytes2.buffer.asUint8List();
+
     pointAnnotationManager =
         await value.annotations.createPointAnnotationManager();
     pointAnnotationManager?.addOnPointAnnotationClickListener(
       AnnotationClickListener(
-        onAnnotationClick: (annotation) {
-          print(places);
+        onAnnotationClick: (annotation) async {
+          if (point != null) {
+            point!.iconOpacity = 0.5;
+            point!.iconSize = 2;
+            point!.textField = annotation.textField == "A" ? "B" : "A";
+            await pointAnnotationManager?.update(point!);
+          }
+
+          annotation.iconOpacity = 1;
+          annotation.iconSize = 2.2;
+          annotation.textField = annotation.textField == "A" ? "B" : "A";
+          await pointAnnotationManager?.update(annotation);
+
+          point = annotation;
+
           selectedPlace = places.firstWhere(
             (place) =>
                 place.lon == annotation.geometry.coordinates.lng &&
@@ -104,34 +128,28 @@ class SearchMapViewState extends ConsumerState<SearchMapView> {
     // value.attribution.updateSettings(AttributionSettings(enabled: false));
   }
 
-  _onCameraChangeListener(CameraChangedEventData data) async {
+  _onCameraChangeListener(CameraChangedEventData data) async {}
+
+  _onMapIdleListener() async {
+    if (mapboxMap == null) return;
+
     if (selectedPlace != null) {
       selectedPlace = null;
       setState(() {});
     }
-  }
-
-  _onMapIdleListener(MapIdleEventData data) async {
-    print("Map idle");
-    if (mapboxMap == null) return;
-
-    if (loadAnnotation) {
-      loadAnnotation = false;
-      return;
-    }
-    places = [];
-    pointAnnotationManager?.deleteAll();
-
-    isLoading = true;
-    setState(() {});
-    await handleGesture(false);
 
     var cameraState = await mapboxMap!.getCameraState();
     var cameraBounds = await mapboxMap?.coordinateBoundsForCamera(
       cameraState.toCameraOptions(),
     );
     var coordinates = boundsCoordinate(cameraBounds!);
-    print("Camera bounds : $coordinates");
+
+    pointAnnotationManager?.deleteAll();
+    point = null;
+    places = [];
+    isLoading = true;
+    setState(() {});
+    await handleGesture(false);
 
     try {
       var response = await ref
@@ -161,15 +179,17 @@ class SearchMapViewState extends ConsumerState<SearchMapView> {
         options.add(
           PointAnnotationOptions(
             geometry: Point(coordinates: Position(place.lon, place.lat)),
+            iconOpacity: 0.5,
             iconSize: 2,
             iconOffset: [0.0, -5.0],
             symbolSortKey: 10,
             image: image,
+            textColor: Colors.transparent.toARGB32(),
           ),
         );
       }
       await pointAnnotationManager?.createMulti(options);
-      loadAnnotation = true;
+      print("Nombre de places ${places.length}");
     } catch (e) {
       if (!mounted) return;
       showToast(context, content: "Une erreur est survenue");
@@ -206,7 +226,17 @@ class SearchMapViewState extends ConsumerState<SearchMapView> {
                   // styleUri: MapboxStyles.STANDARD,
                   onMapCreated: _onMapCreated,
                   onCameraChangeListener: _onCameraChangeListener,
-                  onMapIdleListener: _onMapIdleListener,
+                  onScrollListener: (context) {
+                    if (context.gestureState != GestureState.ended) return;
+
+                    _onMapIdleListener();
+                  },
+                  onZoomListener: (context) {
+                    if (context.gestureState != GestureState.ended) return;
+
+                    _onMapIdleListener();
+                  },
+                  // onMapIdleListener: _onMapIdleListener,
                 ),
                 Positioned(
                   top: MediaQuery.paddingOf(context).top + 32,
@@ -268,9 +298,6 @@ class SearchMapViewState extends ConsumerState<SearchMapView> {
                                 lastItem = suggestion;
                                 controller.text = suggestion.addressLine1;
                                 FocusManager.instance.primaryFocus?.unfocus();
-
-                                isLoading = true;
-                                setState(() {});
 
                                 moveMap(
                                   options: CameraOptions(
