@@ -1,7 +1,10 @@
 import 'package:beauty_app_mobile/core/enums/enums.dart';
+import 'package:beauty_app_mobile/models/address_geoapify.dart';
+import 'package:beauty_app_mobile/models/coordinates_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' as mapbox;
 
 import '../common/custom_header_sheet.dart';
 import '../packages/sliding_sheet/sliding_sheet.dart';
@@ -27,6 +30,26 @@ Future<void> ensureVisibleOnTextArea({required GlobalKey textfieldKey}) async {
       }
     });
   }
+}
+
+CoordinatesModel boundsCoordinate(mapbox.CoordinateBounds bounds) {
+  double north = bounds.northeast.coordinates.lat.toDouble();
+  double east = bounds.northeast.coordinates.lng.toDouble();
+  double south = bounds.southwest.coordinates.lat.toDouble();
+  double west = bounds.southwest.coordinates.lng.toDouble();
+  return CoordinatesModel(north, east, south, west);
+}
+
+bool placeInBounds({
+  required AddressGeoapify place,
+  required mapbox.CoordinateBounds bounds,
+}) {
+  var coordinates = boundsCoordinate(bounds);
+
+  return coordinates.south <= place.lat &&
+      place.lat <= coordinates.north &&
+      coordinates.west <= place.lon &&
+      place.lon <= coordinates.east;
 }
 
 Future<Position> determinePosition() async {
