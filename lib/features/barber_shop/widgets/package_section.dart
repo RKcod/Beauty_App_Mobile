@@ -1,4 +1,5 @@
 import 'package:beauty_app_mobile/core/common/custom_button.dart';
+import 'package:beauty_app_mobile/core/utils/palette.dart';
 import 'package:beauty_app_mobile/core/utils/utils.dart';
 import 'package:beauty_app_mobile/features/appointments/views/appointment_start_view.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +68,7 @@ class PackageSection extends StatelessWidget {
                             Text(
                               "\$280.30",
                               style: TextStyle(
-                                color: Color(0xff432BDF),
+                                color: Palette.primaryColor,
                                 fontSize: 13,
                               ),
                             ),

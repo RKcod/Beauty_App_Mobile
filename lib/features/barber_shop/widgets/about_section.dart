@@ -1,3 +1,4 @@
+import 'package:beauty_app_mobile/core/utils/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:readmore/readmore.dart';
@@ -20,11 +21,16 @@ class AboutSection extends StatelessWidget {
             trimMode: TrimMode.Length,
             // trimLines: 3,
             trimLength: 120,
-            colorClickableText: Colors.pink,
             trimCollapsedText: ' Readmore',
             trimExpandedText: ' Show less',
-            moreStyle: TextStyle(fontWeight: FontWeight.bold),
-            lessStyle: TextStyle(fontWeight: FontWeight.bold),
+            moreStyle: TextStyle(
+              color: Palette.primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
+            lessStyle: TextStyle(
+              color: Palette.primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           Gap(24),
           Text("Opening hours", style: TextStyle(fontFamily: "PoppinsBold")),
@@ -52,9 +58,9 @@ class AboutSection extends StatelessWidget {
           Text(
             "583 463 23 34",
             style: TextStyle(
-              color: Color(0xff432BDF),
+              color: Palette.primaryColor,
               decoration: TextDecoration.underline,
-              decorationColor: Color(0xff432BDF),
+              decorationColor: Palette.primaryColor,
             ),
           ),
         ],

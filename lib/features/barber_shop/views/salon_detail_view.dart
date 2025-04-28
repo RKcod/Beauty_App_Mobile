@@ -1,16 +1,21 @@
+import 'package:beauty_app_mobile/core/common/custom_button.dart';
 import 'package:beauty_app_mobile/core/utils/palette.dart';
 import 'package:beauty_app_mobile/core/utils/utils.dart';
+import 'package:beauty_app_mobile/features/appointments/views/appointment_start_view.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/about_section.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/gallery_section.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/package_section.dart';
+import 'package:beauty_app_mobile/features/barber_shop/widgets/quick_actions_item.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/review_section.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/share_section.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/specialist_widget.dart';
 import 'package:beauty_app_mobile/models/specialist_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:gap/gap.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 var specialists = [
@@ -57,6 +62,19 @@ class _SalonDetailViewState extends State<SalonDetailView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      bottomSheet: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: CustomButton(
+          text: "Book appointment",
+          isFullWidth: true,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AppointmentStartView()),
+            );
+          },
+        ),
+      ),
       body: NotificationListener(
         onNotification: (notification) {
           bool stateBouncing = scrollController.offset < 50;
@@ -85,22 +103,67 @@ class _SalonDetailViewState extends State<SalonDetailView> {
                 SliverAppBar(
                   pinned: true,
                   backgroundColor:
-                      showTitleAppBar ? Palette.primaryColor : Colors.white,
+                      showTitleAppBar ? const Color(0xFFD77777) : Colors.white,
                   surfaceTintColor: Colors.transparent,
                   elevation: 0,
                   automaticallyImplyLeading: false,
-                  leading: IconButton(
-                    padding: const EdgeInsets.all(8),
-                    icon: Icon(Icons.west),
-                    color: Colors.white,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
+                  leading: Row(
+                    children: [
+                      Gap(16),
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
+                        child: IconButton(
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          icon: Icon(Icons.west),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                   actions: [
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        icon: Icon(Icons.share),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                    Gap(8),
                     Padding(
-                      padding: const EdgeInsets.only(right: 24),
-                      child: Icon(Icons.favorite_border, color: Colors.white),
+                      padding: const EdgeInsets.only(right: 16),
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
+                        child: IconButton(
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          icon: Icon(Icons.favorite_border),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
                     ),
                   ],
                   title:
@@ -220,82 +283,34 @@ class _SalonDetailViewState extends State<SalonDetailView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          spacing: 6,
-                          children: [
-                            Icon(
-                              Icons.travel_explore,
-                              color: Palette.primaryColor,
-                            ),
-                            Text(
-                              "Website",
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Palette.primaryColor,
-                              ),
-                            ),
-                          ],
+                        QuickActionsItem(
+                          icon: CupertinoIcons.globe,
+                          title: "Website",
                         ),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          spacing: 6,
-                          children: [
-                            Icon(
-                              Icons.call_outlined,
-                              color: Palette.primaryColor,
-                            ),
-                            Text(
-                              "Call",
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Palette.primaryColor,
-                              ),
-                            ),
-                          ],
+                        QuickActionsItem(
+                          icon: CupertinoIcons.chat_bubble,
+                          title: "Message",
                         ),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          spacing: 6,
-                          children: [
-                            Icon(
-                              Icons.location_on_outlined,
-                              color: Palette.primaryColor,
-                            ),
-                            Text(
-                              "Direction",
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Palette.primaryColor,
-                              ),
-                            ),
-                          ],
+                        QuickActionsItem(
+                          icon: CupertinoIcons.phone,
+                          title: "Call",
                         ),
-                        GestureDetector(
+                        QuickActionsItem(
+                          icon: CupertinoIcons.map_fill,
+                          title: "Direction",
+                          onTap: () {},
+                        ),
+                        QuickActionsItem(
                           onTap: () {
-                            showCustomBottomSheet(
-                              context,
-                              body:
-                                  (context, state) => Material(
-                                    color: Colors.white,
-                                    child: ShareSection(),
-                                  ),
+                            SharePlus.instance.share(
+                              ShareParams(
+                                text:
+                                    'check out my website https://example.com',
+                              ),
                             );
                           },
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            spacing: 6,
-                            children: [
-                              Icon(Icons.share, color: Palette.primaryColor),
-                              Text(
-                                "Share",
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  color: Palette.primaryColor,
-                                ),
-                              ),
-                            ],
-                          ),
+                          icon: CupertinoIcons.paperplane_fill,
+                          title: "Share",
                         ),
                       ],
                     ),
@@ -318,55 +333,65 @@ class _SalonDetailViewState extends State<SalonDetailView> {
                       ),
                     ),
                     Gap(30),
-                    SizedBox(
-                      height: 40,
-                      child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder:
-                            (context, index) => GestureDetector(
-                              onTap: () {
-                                selectTabIndex = index;
-                                setState(() {});
-                              },
-                              child: AnimatedContainer(
-                                duration: const Duration(milliseconds: 100),
-                                curve: Curves.easeInOut,
-                                height: 40,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                ),
-                                decoration: BoxDecoration(
-                                  color:
-                                      index == selectTabIndex
-                                          ? Palette.primaryColor
-                                          : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(24),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    sections[index],
-                                    style: TextStyle(
-                                      color:
-                                          index == selectTabIndex
-                                              ? Colors.white
-                                              : Color(0xffDFDEE4),
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                        separatorBuilder: (context, index) => Gap(4),
-                        itemCount: sections.length,
-                      ),
-                    ),
                   ],
                 ),
               ),
             ),
+            SliverAppBar(
+              automaticallyImplyLeading: false,
+              titleSpacing: 24,
+              pinned: true,
+              backgroundColor: Colors.white,
+              surfaceTintColor: Colors.white,
+              title: SizedBox(
+                height: 40,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder:
+                      (context, index) => GestureDetector(
+                        onTap: () {
+                          selectTabIndex = index;
+                          setState(() {});
+                        },
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 100),
+                          curve: Curves.easeInOut,
+                          height: 40,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          decoration: BoxDecoration(
+                            color:
+                                index == selectTabIndex
+                                    ? Palette.primaryColor
+                                    : Colors.transparent,
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          child: Center(
+                            child: Text(
+                              sections[index],
+                              style: TextStyle(
+                                color:
+                                    index == selectTabIndex
+                                        ? Colors.white
+                                        : Color(0xffDFDEE4),
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                  separatorBuilder: (context, index) => Gap(4),
+                  itemCount: sections.length,
+                ),
+              ),
+            ),
             SliverPadding(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.only(
+                top: 24,
+                left: 24,
+                right: 24,
+                bottom: 72,
+              ),
               sliver: switch (selectTabIndex) {
                 2 => PackageSection(),
                 3 => GallerySection(),

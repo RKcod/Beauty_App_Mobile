@@ -93,28 +93,23 @@ class HomeView extends StatelessWidget {
                     width: 42,
                     height: 42,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Palette.primaryColor),
+                      shape: BoxShape.circle,
+                      color: Colors.black12,
                     ),
                     child: Center(
-                      child: Icon(
-                        Icons.notifications_none_outlined,
-                        color: Palette.primaryColor,
-                      ),
-                    ),
-                  ),
-                  Gap(10),
-                  Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Palette.primaryColor),
-                    ),
-                    child: Center(
-                      child: Icon(
-                        Icons.favorite_border,
-                        color: Palette.primaryColor,
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Icon(Icons.notifications_none_outlined),
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: CircleAvatar(
+                              radius: 5,
+                              backgroundColor: Palette.primaryColor,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -160,7 +155,6 @@ class HomeView extends StatelessWidget {
                   hintText: "Search by Salons",
                   enabled: false,
                   leading: Icon(Icons.search, color: Color(0xffABAAB1)),
-                  trailing: Icon(MingCute.settings_2_line),
                 ),
               ),
               Gap(32),

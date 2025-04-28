@@ -1,7 +1,6 @@
 import 'package:beauty_app_mobile/core/common/custom_button.dart';
 import 'package:beauty_app_mobile/core/common/custom_textfield.dart';
 import 'package:beauty_app_mobile/features/auth/views/auth_action_success_view.dart';
-import 'package:beauty_app_mobile/features/auth/views/sign_in_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:icons_plus/icons_plus.dart';

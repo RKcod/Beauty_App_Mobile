@@ -33,27 +33,15 @@ class _ListConversationsViewState extends State<ListConversationsView> {
                 ),
                 Spacer(),
                 Container(
-                  width: 40,
-                  height: 40,
+                  width: 42,
+                  height: 42,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Palette.primaryColor),
+                    shape: BoxShape.circle,
+                    color: Colors.black12,
                   ),
-                  child: Icon(Icons.search, color: Palette.primaryColor),
+                  child: Center(child: Icon(Icons.search)),
                 ),
                 Gap(10),
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Palette.primaryColor),
-                  ),
-                  child: Icon(
-                    Icons.settings_outlined,
-                    color: Palette.primaryColor,
-                  ),
-                ),
               ],
             ),
             Gap(30),

@@ -189,7 +189,6 @@ class SearchMapViewState extends ConsumerState<SearchMapView> {
         );
       }
       await pointAnnotationManager?.createMulti(options);
-      print("Nombre de places ${places.length}");
     } catch (e) {
       if (!mounted) return;
       showToast(context, content: "Une erreur est survenue");

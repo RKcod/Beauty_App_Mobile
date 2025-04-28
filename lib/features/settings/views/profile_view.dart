@@ -1,7 +1,11 @@
+import 'package:beauty_app_mobile/core/common/custom_button.dart';
 import 'package:beauty_app_mobile/core/utils/palette.dart';
+import 'package:beauty_app_mobile/core/utils/utils.dart';
+import 'package:beauty_app_mobile/features/settings/views/contact_us_view.dart';
 import 'package:beauty_app_mobile/features/settings/views/edit_profile_view.dart';
 import 'package:beauty_app_mobile/features/settings/views/faq_view.dart';
 import 'package:beauty_app_mobile/features/settings/views/notifications_view.dart';
+import 'package:beauty_app_mobile/features/settings/views/password_manager_view.dart';
 import 'package:beauty_app_mobile/models/setting_item.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -13,9 +17,18 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<SettingItem> items = [
-      SettingItem(icon: Icons.credit_card, text: "Payment Methods"),
-      SettingItem(icon: Icons.history, text: "Payment History"),
-      SettingItem(icon: Icons.lock_outline, text: "Change Password"),
+      // SettingItem(icon: Icons.credit_card, text: "Payment Methods"),
+      // SettingItem(icon: Icons.history, text: "Payment History"),
+      SettingItem(
+        icon: Icons.lock_outline,
+        text: "Change Password",
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PasswordManagerView()),
+          );
+        },
+      ),
       SettingItem(icon: Icons.people_alt_outlined, text: "Invites Friends"),
       SettingItem(
         icon: Icons.forum_outlined,
@@ -27,8 +40,70 @@ class ProfileView extends StatelessWidget {
           );
         },
       ),
-      SettingItem(icon: Icons.help_outline, text: "About Us"),
-      SettingItem(icon: Icons.logout, text: "Logout"),
+      SettingItem(
+        icon: Icons.help_outline,
+        text: "Contact Us",
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ContactUsView()),
+          );
+        },
+      ),
+      SettingItem(icon: Icons.receipt, text: "Terms and uses"),
+      SettingItem(
+        icon: Icons.logout,
+        text: "Logout",
+        onPressed: () {
+          showCustomBottomSheet(
+            context,
+            title: "Logout",
+            body:
+                (ctx, state) => Material(
+                  color: Colors.white,
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Column(
+                      children: [
+                        Gap(24),
+                        Text(
+                          "Are you sure you want to logout ?",
+                          style: TextStyle(fontSize: 17, color: Colors.black54),
+                        ),
+                        Gap(36),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: CustomButton(
+                                text: "Cancel",
+                                colorText: Palette.primaryColor,
+                                border: BorderSide(color: Palette.primaryColor),
+                                transparent: true,
+                                onPressed: () {
+                                  Navigator.pop(ctx);
+                                },
+                              ),
+                            ),
+                            Gap(16),
+                            Expanded(
+                              child: CustomButton(
+                                text: "Yes, logout",
+                                onPressed: () {
+                                  Navigator.pop(ctx);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        Gap(16),
+                      ],
+                    ),
+                  ),
+                ),
+          );
+        },
+      ),
     ];
 
     return Scaffold(
@@ -67,41 +142,24 @@ class ProfileView extends StatelessWidget {
                       width: 42,
                       height: 42,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: Palette.primaryColor),
+                        shape: BoxShape.circle,
+                        color: Colors.black12,
                       ),
                       child: Center(
                         child: Stack(
+                          clipBehavior: Clip.none,
                           children: [
-                            Icon(
-                              Icons.notifications_none_outlined,
-                              color: Palette.primaryColor,
-                            ),
+                            Icon(Icons.notifications_none_outlined),
                             Positioned(
-                              top: 2,
-                              right: 2,
+                              top: 0,
+                              right: 0,
                               child: CircleAvatar(
-                                radius: 2,
+                                radius: 5,
                                 backgroundColor: Palette.primaryColor,
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    ),
-                  ),
-                  Gap(10),
-                  Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Palette.primaryColor),
-                    ),
-                    child: Center(
-                      child: Icon(
-                        Icons.favorite_border,
-                        color: Palette.primaryColor,
                       ),
                     ),
                   ),
