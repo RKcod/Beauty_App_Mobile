@@ -4,7 +4,6 @@ import 'package:beauty_app_mobile/core/providers/providers.dart';
 import 'package:beauty_app_mobile/core/utils/utils.dart';
 import 'package:beauty_app_mobile/features/barber_shop/widgets/filter_salon_map.dart';
 import 'package:beauty_app_mobile/models/address_geoapify.dart';
-import 'package:beauty_app_mobile/models/coordinates_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
